@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import styles from '../../styles/Listings.module.css';
+import styles from '../../styles/listings.module.css';
 import Link from 'next/link';
 import GoogleMaps from '../../components/GoogleMapsRender';
 import Footer from '../../components/Footer';

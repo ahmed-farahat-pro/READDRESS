@@ -2,7 +2,7 @@
 "use client"
 import { useEffect, useState } from 'react';
 import GoogleMaps from '../../components/GoogleMapsRender';
-import styles from '../../styles/Listings.module.css';
+import styles from '../../styles/listings.module.css';
 
 export default function PendingListings() {
   const [listings, setListings] = useState([]);
