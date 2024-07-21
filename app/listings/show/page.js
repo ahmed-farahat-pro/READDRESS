@@ -1,9 +1,7 @@
-"use client"; // Add this directive at the top to use client-side features
-
+"use client";
 import { useSearchParams } from 'next/navigation';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import Slider from 'react-slick';
 import styles from '../../styles/listingShow.module.css';
 
 export default function ListingShow() {
@@ -15,31 +13,17 @@ export default function ListingShow() {
     return <div>Loading...</div>;
   }
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-  };
-
   return (
     <div className={styles.container}>
       <Header />
       <div className={styles.listingDetails}>
-        <Slider {...settings} className={styles.slider}>
-          {listing.images.map((image, index) => (
-            <div key={index} className={styles.slide}>
-              <img
-                src={image.image_url}
-                alt={`Listing Image ${index + 1}`}
-                className={styles.image}
-              />
-            </div>
-          ))}
-        </Slider>
+        {listing.images.length > 0 && (
+          <img
+            src={listing.images[0].image_url}
+            alt="Listing Image"
+            className={styles.image}
+          />
+        )}
         <h1>{listing.title}</h1>
         <p>{listing.description}</p>
         <p className={styles.price}>Price: {listing.price} EGB</p>
