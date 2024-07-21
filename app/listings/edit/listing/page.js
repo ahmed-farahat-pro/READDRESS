@@ -41,7 +41,7 @@ export default function EditListing() {
   });
 
   const [files, setFiles] = useState([]);
-  const router = useRouter();
+ 
 
   useEffect(() => {
     if (id) {
