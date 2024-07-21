@@ -1,21 +1,21 @@
 .container {
-    padding: 20px;
+  padding: 20px;
 }
 
 .listingDetails {
-    max-width: 800px;
-    margin: 0 auto;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .slider {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .slide {
-    position: relative;
+  position: relative;
 }
 
 .image {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
 }
