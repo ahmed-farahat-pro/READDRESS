@@ -1,27 +1,64 @@
-/* styles/Listings.module.css */
-
-.container {
-    padding: 20px;
-}
-
-.error {
-    color: red;
-}
-
 .listings {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    /* Switch to grid layout */
+    grid-template-columns: repeat(3, 1fr);
+    /* Creates 3 equal columns */
+    gap: 30px;
+    /* Adds space between items */
 }
-
+.price{
+    font-size: larger;
+    font-weight: 900;
+    
+}
 .listing {
+    background-color: #fff;
+    display: flex;
+    
+    /* Centers content horizontally and vertically */
+    flex-direction: column;
+    /* Stacks children vertically */
+    align-items: center;
+    /* Centers items horizontally */
     border: 1px solid #ccc;
-    padding: 20px;
+    /* Optional: border for each card */
     border-radius: 10px;
+    /* Optional: rounded corners */
+    padding: 20px;
+    /* Adds padding inside each card */
+    box-sizing: border-box;
+    color: black;
+    /* Includes padding and border in the element's total width and height */
+}
+.listing:hover{
+    background-color: gainsboro;
+
 }
 
-.images img {
-    max-width: 100%;
-    height: auto;
-    display: block;
+.image {
+    width: 100%;
+    /* Makes the image fit within the card width */
+    height: 350px;
+    /* Sets a fixed height for the image */
+    object-fit:cover;
+    /* Ensures the entire image fits without cropping */
+    border-radius: 5px;
+    /* Optional: rounded corners */
+    margin-bottom: 10px;
+    /* Space between image and text */
+}
+
+/* Optional: Adjust item size on smaller screens */
+@media (max-width: 1200px) {
+    .listings {
+        grid-template-columns: repeat(2, 1fr);
+        /* Two items per row on medium screens */
+    }
+}
+
+@media (max-width: 800px) {
+    .listings {
+        grid-template-columns: 1fr;
+        /* One item per row on small screens */
+    }
 }
