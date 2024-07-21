@@ -1,7 +1,8 @@
-'use client';
+"use client";
 import { useState, useEffect, Suspense, lazy } from 'react';
-import { useRouter } from 'next/router';
+
 import { useSearchParams } from 'next/navigation';
+import axios from 'axios'; // Make sure to import axios
 import styles from '../../../styles/Form.module.css';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
@@ -11,17 +12,15 @@ const GoogleMaps = lazy(() => import('../../../components/GoogleMaps'));
 export default function EditListing() {
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
-  console.log(id);
+  const userId = searchParams.get('userId');
+  const [loading , setLoading]=useState(false);
+
 
   const [googleMapsUrl, setGoogleMapsUrl] = useState('');
+ const handleUrlChange=(url)=>{
 
-  const handleUrlChange = (url) => {
-    setGoogleMapsUrl(url);
-  };
-
-  const userId = searchParams.get('userId');
-  console.log(userId);
-  
+    setGoogleMapsUrl(url)
+}
   const [formData, setFormData] = useState({
     user_id: userId,
     title: '',
@@ -42,7 +41,6 @@ export default function EditListing() {
   });
 
   const [files, setFiles] = useState([]);
- 
 
   useEffect(() => {
     if (id) {
@@ -53,9 +51,10 @@ export default function EditListing() {
   const fetchListing = async () => {
     try {
       const res = await axios.get(`/api/listings/${id}`);
-      const listing = res.data.data;
+      const listing = res.data;
+      
       setFormData({
-        user_id: listing.user_id,
+        user_id: userId,
         title: listing.title,
         maps_url: listing.maps_url,
         description: listing.description,
@@ -69,10 +68,11 @@ export default function EditListing() {
         bedrooms: listing.bedrooms,
         bathrooms: listing.bathrooms,
         area: listing.area,
-        status: 'pending',
+        status: listing.status,
         images: listing.images
       });
       setGoogleMapsUrl(listing.maps_url);
+      setLoading(true);
     } catch (error) {
       console.error('Error fetching listing:', error);
     }
@@ -92,7 +92,7 @@ export default function EditListing() {
     formData.append('file', file);
 
     try {
-      const response = await fetch('http://localhost:3000/api/aws-up', {
+      const response = await fetch('/api/aws-up', {
         method: 'POST',
         body: formData
       });
@@ -118,13 +118,9 @@ export default function EditListing() {
       return;
     }
 
-    const updatedFormData1 = {
+    const updatedFormData = {
       ...formData,
       images: [...formData.images, ...imageUrls.map(url => ({ image_url: url }))],
-    };
-
-    const updatedFormData = {
-      ...updatedFormData1,
       maps_url: googleMapsUrl,
       status: 'pending'
     };
@@ -150,8 +146,11 @@ export default function EditListing() {
       alert('Error updating listing');
     }
   };
-
+if (!loading){
+    return <div>......loading</div>
+}
   return (
+    
     <div>
       <Header />
       <div className={styles.container}>
@@ -166,7 +165,9 @@ export default function EditListing() {
               onChange={handleChange}
               required
               className={styles.input}
+              placeholder={formData.title}
             />
+            <h1 style={{color:"#fff"}}>{formData.title}</h1>
           </label>
           <label className={styles.label}>
             Description:
@@ -177,6 +178,7 @@ export default function EditListing() {
               required
               className={styles.textarea}
             />
+               
           </label>
           <label className={styles.label}>
             Price:
