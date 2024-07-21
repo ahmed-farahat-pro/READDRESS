@@ -10,6 +10,18 @@
     border: 1px solid #ddd;
     /* Optional: border for visual clarity */
 }
+@media (max-width: 800px) {
+    .slideshow-container {
+            position: relative;
+            width: 300px;
+            /* Set the fixed width */
+            height: 300px;
+            /* Set the fixed height */
+            margin: auto;
+            overflow: hidden;
+            border: 1px solid #ddd;
+            /* Optional: border for visual clarity */
+        }}
 
 /* Hide the images by default */
 .mySlides {
