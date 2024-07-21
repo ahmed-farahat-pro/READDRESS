@@ -5,8 +5,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Slider from 'react-slick';
 import styles from '../../styles/listingShow.module.css';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+
 export default function ListingShow() {
   const searchParams = useSearchParams();
   const data = searchParams.get('data');
