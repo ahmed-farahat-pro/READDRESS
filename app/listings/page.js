@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect,Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import styles from '../styles/listings.module.css';
 import Link from 'next/link';
@@ -63,7 +63,7 @@ export default function Listings() {
   console.log('Listings page userId:', userId);
 
   return (
-    
+     <Suspense fallback={<div>Loading...</div>}>
     <div className={styles.container}>
         <Header />
         
@@ -113,5 +113,6 @@ export default function Listings() {
       </div>
       <Footer />
     </div>
+    </Suspense>
   );
 }

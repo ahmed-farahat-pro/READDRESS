@@ -1,20 +1,17 @@
-// pages/listings/edit/[id].js
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense, lazy } from 'react';
 import { useRouter } from 'next/router';
 import { useSearchParams } from 'next/navigation';
 import styles from '../../../styles/Form.module.css';
-import GoogleMaps from '../../../components/GoogleMaps';
-import axios from 'axios';
-import Header from '../../../components/Header';
-import Footer from '../../../components/Footer';
+
+// Dynamically import GoogleMaps with React.lazy
+const GoogleMaps = lazy(() => import('../../../components/GoogleMaps'));
 
 export default function EditListing() {
-   const searchParams = useSearchParams();
- const id = searchParams.get('id');
- console.log(id);
- 
-  
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
+  console.log(id);
+
   const [googleMapsUrl, setGoogleMapsUrl] = useState('');
 
   const handleUrlChange = (url) => {
@@ -22,7 +19,8 @@ export default function EditListing() {
   };
 
   const userId = searchParams.get('userId');
-  console.log(userId)
+  console.log(userId);
+  
   const [formData, setFormData] = useState({
     user_id: userId,
     title: '',
@@ -43,6 +41,7 @@ export default function EditListing() {
   });
 
   const [files, setFiles] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     if (id) {
@@ -152,161 +151,161 @@ export default function EditListing() {
   };
 
   return (
-    <div> 
-
-        <div> <Header /> </div>
-    
-    <div className={styles.container}>
-      <h1>Edit Listing</h1>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <label className={styles.label}>
-          Title:
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            required
-            className={styles.input}
-          />
-        </label>
-        <label className={styles.label}>
-          Description:
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            required
-            className={styles.textarea}
-          />
-        </label>
-        <label className={styles.label}>
-          Price:
-          <input
-            type="number"
-            name="price"
-            value={formData.price}
-            onChange={handleChange}
-            required
-            className={styles.input}
-          />
-        </label>
-        <label className={styles.label}>
-          Address:
-          <input
-            type="text"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            required
-            className={styles.input}
-          />
-        </label>
-        <label className={styles.label}>
-          City:
-          <input
-            type="text"
-            name="city"
-            value={formData.city}
-            onChange={handleChange}
-            required
-            className={styles.input}
-          />
-        </label>
-        <label className={styles.label}>
-          State:
-          <input
-            type="text"
-            name="state"
-            value={formData.state}
-            onChange={handleChange}
-            required
-            className={styles.input}
-          />
-        </label>
-        <label className={styles.label}>
-          Zip Code:
-          <input
-            type="text"
-            name="zip_code"
-            value={formData.zip_code}
-            onChange={handleChange}
-            required
-            className={styles.input}
-          />
-        </label>
-        <label className={styles.label}>
-          Country:
-          <input
-            type="text"
-            name="country"
-            value={formData.country}
-            onChange={handleChange}
-            required
-            className={styles.input}
-          />
-        </label>
-        <label className={styles.label}>
-          Property Type:
-          <input
-            type="text"
-            name="property_type"
-            value={formData.property_type}
-            onChange={handleChange}
-            required
-            className={styles.input}
-          />
-        </label>
-        <label className={styles.label}>
-          Bedrooms:
-          <input
-            type="number"
-            name="bedrooms"
-            value={formData.bedrooms}
-            onChange={handleChange}
-            required
-            className={styles.input}
-          />
-        </label>
-        <label className={styles.label}>
-          Bathrooms:
-          <input
-            type="number"
-            name="bathrooms"
-            value={formData.bathrooms}
-            onChange={handleChange}
-            required
-            className={styles.input}
-          />
-        </label>
-        <label className={styles.label}>
-          Area:
-          <input
-            type="number"
-            name="area"
-            value={formData.area}
-            onChange={handleChange}
-            required
-            className={styles.input}
-          />
-        </label>
-        <label className={styles.label}>
-          Upload Images:
-          <input
-            type="file"
-            multiple
-            onChange={handleFileChange}
-            className={styles.input}
-          />
-        </label>
-        <div>
-          <GoogleMaps onUrlChange={handleUrlChange} />
-          <p>URL for clicked location: {googleMapsUrl}</p>
-        </div>
-        <button type="submit" className={styles.button}>Update Listing</button>
-      </form>
-    </div>
-<div> <Footer /> </div>
+    <div>
+      <Header />
+      <div className={styles.container}>
+        <h1>Edit Listing</h1>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <label className={styles.label}>
+            Title:
+            <input
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              required
+              className={styles.input}
+            />
+          </label>
+          <label className={styles.label}>
+            Description:
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              required
+              className={styles.textarea}
+            />
+          </label>
+          <label className={styles.label}>
+            Price:
+            <input
+              type="number"
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
+              required
+              className={styles.input}
+            />
+          </label>
+          <label className={styles.label}>
+            Address:
+            <input
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              required
+              className={styles.input}
+            />
+          </label>
+          <label className={styles.label}>
+            City:
+            <input
+              type="text"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              required
+              className={styles.input}
+            />
+          </label>
+          <label className={styles.label}>
+            State:
+            <input
+              type="text"
+              name="state"
+              value={formData.state}
+              onChange={handleChange}
+              required
+              className={styles.input}
+            />
+          </label>
+          <label className={styles.label}>
+            Zip Code:
+            <input
+              type="text"
+              name="zip_code"
+              value={formData.zip_code}
+              onChange={handleChange}
+              required
+              className={styles.input}
+            />
+          </label>
+          <label className={styles.label}>
+            Country:
+            <input
+              type="text"
+              name="country"
+              value={formData.country}
+              onChange={handleChange}
+              required
+              className={styles.input}
+            />
+          </label>
+          <label className={styles.label}>
+            Property Type:
+            <input
+              type="text"
+              name="property_type"
+              value={formData.property_type}
+              onChange={handleChange}
+              required
+              className={styles.input}
+            />
+          </label>
+          <label className={styles.label}>
+            Bedrooms:
+            <input
+              type="number"
+              name="bedrooms"
+              value={formData.bedrooms}
+              onChange={handleChange}
+              required
+              className={styles.input}
+            />
+          </label>
+          <label className={styles.label}>
+            Bathrooms:
+            <input
+              type="number"
+              name="bathrooms"
+              value={formData.bathrooms}
+              onChange={handleChange}
+              required
+              className={styles.input}
+            />
+          </label>
+          <label className={styles.label}>
+            Area:
+            <input
+              type="number"
+              name="area"
+              value={formData.area}
+              onChange={handleChange}
+              required
+              className={styles.input}
+            />
+          </label>
+          <label className={styles.label}>
+            Upload Images:
+            <input
+              type="file"
+              multiple
+              onChange={handleFileChange}
+              className={styles.input}
+            />
+          </label>
+          <div>
+            <Suspense fallback={<div>Loading Google Maps...</div>}>
+              <GoogleMaps onUrlChange={handleUrlChange} />
+            </Suspense>
+            <p>URL for clicked location: {googleMapsUrl}</p>
+          </div>
+          <button type="submit" className={styles.button}>Update Listing</button>
+        </form>
+      </div>
+      <Footer />
     </div>
   );
 }

@@ -1,8 +1,49 @@
-// pages/pending-listings.js
-"use client"
-import { useEffect, useState } from 'react';
-import GoogleMaps from '../../components/GoogleMapsRender';
+"use client";
+import { useEffect, useState, Suspense } from 'react';
+import GoogleMaps from '../../components/GoogleMapsRender'; // Adjust import path as needed
 import styles from '../../styles/listings.module.css';
+
+// Fallback component to show while data is loading or if an error occurs
+const LoadingFallback = () => <div>Loading...</div>;
+const ErrorFallback = ({ error }) => <div className={styles.error}>{error}</div>;
+
+const ListingItem = ({ listing, onApprove, onDelete }) => (
+  <div key={listing._id} className={styles.listing}>
+    <h2>{listing.title}</h2>
+    <p>{listing.description}</p>
+    <p>Price: ${listing.price}</p>
+    <p>Bedrooms: {listing.bedrooms}</p>
+    <p>Bathrooms: {listing.bathrooms}</p>
+    <div className={styles.images}>
+      {listing.images.map((image, index) => (
+        <img key={index} src={image.image_url} alt={`Image ${index + 1}`} />
+      ))}
+    </div>
+    <p>Status: {listing.status}</p>
+
+    <div>
+      <h1>Google Maps Location</h1>
+      <GoogleMaps googleMapsUrl={listing.maps_url} />
+    </div>
+    
+    <a 
+      href={`tel:${listing.user_id.phone_number}`}
+      style={{ backgroundColor: 'blue', color: 'white', padding: '10px', border: 'none', borderRadius: '5px', cursor: 'pointer', textDecoration: 'none', display: 'inline-block', marginTop: '10px' }}
+    >
+      Call
+    </a>
+
+    {listing.status === 'pending' && (
+      <div>
+        <button onClick={() => onApprove(listing._id)}>Approve</button>
+      </div>
+    )}
+
+    <div> 
+      <button onClick={() => onDelete(listing._id)}>Delete</button>
+    </div>
+  </div>
+);
 
 export default function PendingListings() {
   const [listings, setListings] = useState([]);
@@ -56,7 +97,7 @@ export default function PendingListings() {
 
   const deleteListing = async (listingId) => {
     try {
-      const response = await fetch(`/api/listings/approve/${listingId}`, {
+      const response = await fetch(`/api/listings/${listingId}`, {
         method: 'DELETE',
       });
 
@@ -78,44 +119,19 @@ export default function PendingListings() {
   return (
     <div className={styles.container}>
       <h1>Pending and Approved Listings</h1>
-      {error && <p className={styles.error}>{error}</p>}
-      <div className={styles.listings}>
-        {listings.map((listing) => (
-          <div key={listing._id} className={styles.listing}>
-            <h2>{listing.title}</h2>
-            <p>{listing.description}</p>
-            <p>Price: ${listing.price}</p>
-            <p>Bedrooms: {listing.bedrooms}</p>
-            <p>Bathrooms: {listing.bathrooms}</p>
-            <div className={styles.images}>
-              {listing.images.map((image, index) => (
-                <img key={index} src={image.image_url} alt={`Image ${index + 1}`} />
-              ))}
-            </div>
-            <p>Status: {listing.status}</p>
-
-             <div>
-      <h1>Google Maps Location</h1>
-      <GoogleMaps googleMapsUrl={listing.maps_url} />
-    </div>
-     <a 
-                href={`tel:${listing.user_id.phone_number}`}
-                style={{ backgroundColor: 'blue', color: 'white', padding: '10px', border: 'none', borderRadius: '5px', cursor: 'pointer', textDecoration: 'none', display: 'inline-block', marginTop: '10px' }}
-              >
-                Call
-              </a>
-            {listing.status === 'pending' && (
-              <div>
-                <button onClick={() => approveListing(listing._id)}>Approve</button>
-              </div>
-            )}
-    <div> 
-        <button onClick={() => deleteListing(listing._id)}>Delete</button>
+      {error && <ErrorFallback error={error} />}
+      <Suspense fallback={<LoadingFallback />}>
+        <div className={styles.listings}>
+          {listings.map((listing) => (
+            <ListingItem
+              key={listing._id}
+              listing={listing}
+              onApprove={approveListing}
+              onDelete={deleteListing}
+            />
+          ))}
         </div>
-             
-          </div>
-        ))}
-      </div>
+      </Suspense>
     </div>
   );
 }
