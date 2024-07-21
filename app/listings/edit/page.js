@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 
+
 // Dynamically import GoogleMaps with React.lazy
 const GoogleMaps = lazy(() => import('../../components/GoogleMapsRender'));
 
@@ -104,24 +105,13 @@ export default function Listings() {
         <div className={styles.listings}>
           {listings.map((listing) => (
             <div key={listing._id} className={styles.listing}>
-              <h2>{listing.title}</h2>
-              <p>{listing.description}</p>
-              <p>Price: ${listing.price}</p>
-              <p>Bedrooms: {listing.bedrooms}</p>
-              <p>Bathrooms: {listing.bathrooms}</p>
-              <div className={styles.images}>
-                {listing.images.map((image, index) => (
-                  <img key={index} src={image.image_url} alt={`Image ${index + 1}`} />
-                ))}
+            
+             
+              <div className={styles['image-container']}>
+                  <img  src={listing.images[0].image_url} alt={`Image`} />
               </div>
-              {(listing.maps_url != null) && (
-                <div>
-                  <h1>Google Maps Location</h1>
-                  <Suspense fallback={<div>Loading Google Maps...</div>}>
-                    <GoogleMaps googleMapsUrl={listing.maps_url} />
-                  </Suspense>
-                </div>
-              )}
+              
+             
               <div className={styles.actions}>
                 <Link href={`/listings/edit/listing/?id=${listing._id}&userId=${userId}`}>
                   <button style={{ backgroundColor: 'green', color: 'white', marginBottom: '10px', padding: '10px', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>

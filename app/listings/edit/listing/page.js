@@ -3,7 +3,8 @@ import { useState, useEffect, Suspense, lazy } from 'react';
 import { useRouter } from 'next/router';
 import { useSearchParams } from 'next/navigation';
 import styles from '../../../styles/Form.module.css';
-
+import Header from '../../../components/Header';
+import Footer from '../../../components/Footer';
 // Dynamically import GoogleMaps with React.lazy
 const GoogleMaps = lazy(() => import('../../../components/GoogleMaps'));
 

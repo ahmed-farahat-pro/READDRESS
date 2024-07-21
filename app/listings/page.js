@@ -88,7 +88,7 @@ export default function Listings() {
                   <img
                     src={listing.images[0].image_url}
                     alt="Listing Image"
-                    className={styles.image}
+                    className={styles['image-container']}
                   />
                 )}
                 <h2>{listing.title}</h2>

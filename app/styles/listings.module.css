@@ -1,11 +1,10 @@
 .listings {
     display: grid;
-    /* Switch to grid layout */
     grid-template-columns: repeat(3, 1fr);
-    /* Creates 3 equal columns */
     gap: 30px;
-    /* Adds space between items */
+  
 }
+
 .price{
     font-size: larger;
     font-weight: 900;
@@ -14,45 +13,38 @@
 .listing {
     background-color: #fff;
     display: flex;
-    
-    /* Centers content horizontally and vertically */
     flex-direction: column;
-    /* Stacks children vertically */
     align-items: center;
-    /* Centers items horizontally */
     border: 1px solid #ccc;
-    /* Optional: border for each card */
     border-radius: 10px;
-    /* Optional: rounded corners */
     padding: 20px;
-    /* Adds padding inside each card */
     box-sizing: border-box;
     color: black;
-    /* Includes padding and border in the element's total width and height */
 }
 .listing:hover{
     background-color: gainsboro;
 
 }
 
-.image {
-    width: 100%;
-    /* Makes the image fit within the card width */
-    height: 350px;
-    /* Sets a fixed height for the image */
-    object-fit:cover;
-    /* Ensures the entire image fits without cropping */
+.image-container {
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    /* Hide any overflow */
     border-radius: 5px;
-    /* Optional: rounded corners */
     margin-bottom: 10px;
-    /* Space between image and text */
 }
 
-/* Optional: Adjust item size on smaller screens */
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Ensure the image covers the container */
+}
+
 @media (max-width: 1200px) {
     .listings {
         grid-template-columns: repeat(2, 1fr);
-        /* Two items per row on medium screens */
     }
 }
 
