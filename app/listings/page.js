@@ -82,7 +82,7 @@ export default function Listings() {
         {error && <p className={styles.error}>{error}</p>}
         <div className={styles.listings}>
           {listings.map((listing) => (
-            <Link key={listing._id} href={`/listings/${listing._id}`} className={styles.cardLink}>
+            <Link key={listing._id} href={`/listings/show?data=${encodeURIComponent(JSON.stringify(listing))}`} className={styles.cardLink}>
               <div className={styles.listing}>
                 {listing.images.length > 0 && (
                   <img
@@ -92,7 +92,7 @@ export default function Listings() {
                   />
                 )}
                 <h2>{listing.title}</h2>
-                <p className={styles.price}> {listing.price}  EGB</p>
+                <p className={styles.price}>{listing.price} EGB</p>
               </div>
             </Link>
           ))}
