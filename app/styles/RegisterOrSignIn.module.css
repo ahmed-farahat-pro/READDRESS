@@ -1,21 +1,54 @@
-/* styles/RegisterOrSignIn.module.css */
-
+/* Container style */
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
+    /* Full viewport height */
+    text-align: center;
+    background-color: #000;
+  
 }
 
 
+
+/* Buttons container style */
 .buttons {
     display: flex;
-    gap: 10px;
+    flex-direction: column;
+    gap: 20px;
+
+    /* Space between buttons */
 }
 
+/* Button style */
 .button {
+    background-color: #007bff;
+    /* Bootstrap blue */
+    width: 100px;
+    color: white;
+    border: none;
+    border-radius: 5px;
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 1rem;
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    /* Smooth color transition and slight scale effect */
+}
+
+/* Hover effect for buttons */
+.button:hover {
+    background-color: #0056b3;
+    /* Darker blue for hover */
+    transform: scale(1.05);
+    /* Slightly increase size */
+}
+
+/* Optional: Button focus style */
+.button:focus {
+    outline: none;
+    /* Remove default focus outline */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+    /* Blue focus outline */
 }
