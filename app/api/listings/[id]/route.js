@@ -15,7 +15,7 @@ export const GET = async (request, { params }) => {
       });
 
     if (!listing) {
-      return NextResponse.notFound('Listing Not Found');
+      return NextResponse.notFound();
     }
 
     return NextResponse.json({ listing }, { status: 200 });
