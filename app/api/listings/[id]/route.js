@@ -46,9 +46,9 @@ export const PATCH = async (request, { params }) => {
     }
 
     // Set no-cache headers
-    const response = NextResponse.json({ listing }, { status: 200 });
-    response.headers.set('Cache-Control', 'no-store');
-    return response;
+    return NextResponse.json({ listing }, { status: 200 });
+    
+   
   } catch (error) {
     console.error('Error updating listing:', error);
     return NextResponse.json('Internal Server Error', { status: 500 });

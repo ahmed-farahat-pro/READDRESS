@@ -6,10 +6,13 @@ import axios from 'axios'; // Make sure to import axios
 import styles from '../../../styles/Form.module.css';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
+import { useRouter } from 'next/router';
+
 // Dynamically import GoogleMaps with React.lazy
 const GoogleMaps = lazy(() => import('../../../components/GoogleMaps'));
 
 export default function EditListing() {
+  
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
   const userId = searchParams.get('userId');
@@ -118,9 +121,11 @@ export default function EditListing() {
       return;
     }
 
+   
+
     const updatedFormData = {
       ...formData,
-      images: [...formData.images, ...imageUrls.map(url => ({ image_url: url }))],
+      images: imageUrls.map(url => ({ image_url: url })),
       maps_url: googleMapsUrl,
       status: 'pending'
     };
@@ -140,7 +145,7 @@ export default function EditListing() {
 
       const result = await response.json();
       alert('Listing updated successfully');
-      router.push(`/listings?userId=${userId}`); // Redirect to listings page after update
+   
     } catch (error) {
       console.error(error);
       alert('Error updating listing');
@@ -163,7 +168,7 @@ if (!loading){
               name="title"
               value={formData.title}
               onChange={handleChange}
-              required
+             
               className={styles.input}
               placeholder={formData.title}
             />
@@ -175,7 +180,7 @@ if (!loading){
               name="description"
               value={formData.description}
               onChange={handleChange}
-              required
+             
               className={styles.textarea}
             />
                
@@ -187,7 +192,7 @@ if (!loading){
               name="price"
               value={formData.price}
               onChange={handleChange}
-              required
+            
               className={styles.input}
             />
           </label>
@@ -198,7 +203,7 @@ if (!loading){
               name="address"
               value={formData.address}
               onChange={handleChange}
-              required
+             
               className={styles.input}
             />
           </label>
@@ -209,7 +214,7 @@ if (!loading){
               name="city"
               value={formData.city}
               onChange={handleChange}
-              required
+             
               className={styles.input}
             />
           </label>
@@ -220,7 +225,7 @@ if (!loading){
               name="state"
               value={formData.state}
               onChange={handleChange}
-              required
+           
               className={styles.input}
             />
           </label>
@@ -231,7 +236,7 @@ if (!loading){
               name="zip_code"
               value={formData.zip_code}
               onChange={handleChange}
-              required
+             
               className={styles.input}
             />
           </label>
@@ -242,7 +247,7 @@ if (!loading){
               name="country"
               value={formData.country}
               onChange={handleChange}
-              required
+           
               className={styles.input}
             />
           </label>
@@ -253,7 +258,7 @@ if (!loading){
               name="property_type"
               value={formData.property_type}
               onChange={handleChange}
-              required
+        
               className={styles.input}
             />
           </label>
@@ -264,7 +269,7 @@ if (!loading){
               name="bedrooms"
               value={formData.bedrooms}
               onChange={handleChange}
-              required
+          
               className={styles.input}
             />
           </label>
@@ -275,7 +280,7 @@ if (!loading){
               name="bathrooms"
               value={formData.bathrooms}
               onChange={handleChange}
-              required
+            
               className={styles.input}
             />
           </label>
@@ -286,7 +291,7 @@ if (!loading){
               name="area"
               value={formData.area}
               onChange={handleChange}
-              required
+             
               className={styles.input}
             />
           </label>

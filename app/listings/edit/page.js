@@ -112,10 +112,10 @@ export default function Listings() {
           {listings.map((listing) => (
             <div key={listing._id} className={styles.listing}>
             
-             
-              <div className={styles['image-container']}>
+             {  <div className={styles['image-container']}>
                   <img  src={listing.images[0].image_url} alt={`Image`} />
-              </div>
+              </div>}
+             
               
              
               <div className={styles.actions}>
