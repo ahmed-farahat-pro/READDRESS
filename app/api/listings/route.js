@@ -1,3 +1,4 @@
+"use client"
 // pages/api/listings/index.js
 import Listing from '../../schemas/listing';
 import connectToDatabase from '../../lib/mongodb';

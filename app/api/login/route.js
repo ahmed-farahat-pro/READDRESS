@@ -1,3 +1,4 @@
+"use client"
 // pages/api/login.js
 import connectToDatabase from '../../lib/mongodb';
 import User from '../../schemas/user'; // Assuming you have a User schema

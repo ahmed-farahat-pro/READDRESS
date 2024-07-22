@@ -1,3 +1,4 @@
+"use client"
 // pages/api/signup.js
 
 import connectToDatabase from '../../lib/mongodb';
