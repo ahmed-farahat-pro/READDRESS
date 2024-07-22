@@ -18,21 +18,23 @@ export default function ListingShow() {
     <div className={styles.container}>
       <Header />
       <div className={styles.listingDetails}>
-       <Slideshow imageUrls= {listing.images}/>
-        <h1>{listing.title}</h1>
-        <p>{listing.description}</p>
+        <Slideshow imageUrls={listing.images} />
+        <h1 className={styles.title}>{listing.title}</h1>
+        <p className={styles.description}>{listing.description}</p>
         <p className={styles.price}>Price: {listing.price} EGB</p>
-        <p>Address: {listing.address}, {listing.city}, {listing.state}, {listing.zip_code}, {listing.country}</p>
-        <p>Property Type: {listing.property_type}</p>
-        <p>Bedrooms: {listing.bedrooms}</p>
-        <p>Bathrooms: {listing.bathrooms}</p>
-        <p>Area: {listing.area} sq ft</p>
-         <a 
-      href={`tel:${listing.user_id.phone_number}`}
-      style={{ backgroundColor: 'green', color: 'white', padding: '10px', border: 'none', borderRadius: '5px', cursor: 'pointer', textDecoration: 'none', display: 'inline-block', marginTop: '10px' }}
-    >
-      Call
-    </a>
+        <p className={styles.address}>
+          Address: {listing.address}, {listing.city}, {listing.state}, {listing.zip_code}, {listing.country}
+        </p>
+        <p className={styles.propertyType}>Property Type: {listing.property_type}</p>
+        <p className={styles.bedrooms}>Bedrooms: {listing.bedrooms}</p>
+        <p className={styles.bathrooms}>Bathrooms: {listing.bathrooms}</p>
+        <p className={styles.area}>Area: {listing.area} sq ft</p>
+        <a 
+          href={`tel:${listing.user_id.phone_number}`}
+          className={styles.callButton}
+        >
+          Call
+        </a>
       </div>
       <Footer />
     </div>
