@@ -1,6 +1,6 @@
 // pages/api/listings/index.js
 import connectToDatabase from '../../lib/mongodb';
-import Listing from '../../schemas/Listing';
+import Listing from '../../schemas/listing';
 
 export const GET = async (request) => {
   try {
