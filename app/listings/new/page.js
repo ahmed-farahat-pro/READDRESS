@@ -63,7 +63,7 @@ export default function AddListing() {
     formData.append('file', file);
 
     try {
-      const response = await fetch('http://localhost:3000/api/aws-up', {
+      const response = await fetch('/api/aws-up', {
         method: 'POST',
         body: formData
       });
