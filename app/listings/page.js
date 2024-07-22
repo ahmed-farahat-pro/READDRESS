@@ -21,6 +21,9 @@ export default function Listings() {
         // Fetching with cache: 'no-store' to ensure fresh data
         const response = await fetch('/api/listings', {
           cache: 'no-store',
+           next: {
+      revalidate: 2, // 1 hour
+    },
         });
         const data = await response.json();
 
@@ -45,6 +48,9 @@ export default function Listings() {
       // Fetching with cache: 'no-store' to ensure fresh data
       const response = await fetch(`/api/listings/search/${searchTerm}`, {
         cache: 'no-store',
+         next: {
+      revalidate: 2, // 1 hour
+    },
       });
       const data = await response.json();
 

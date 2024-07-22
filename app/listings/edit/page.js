@@ -24,6 +24,9 @@ export default function Listings() {
       try {
           const response = await fetch('/api/listings', {
           cache: 'no-store',
+           next: {
+      revalidate: 2, // 1 hour
+    },
         });
         const data = await response.json();
 
