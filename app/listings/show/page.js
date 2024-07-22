@@ -29,12 +29,22 @@ export default function ListingShow() {
         <p className={styles.bedrooms}>Bedrooms: {listing.bedrooms}</p>
         <p className={styles.bathrooms}>Bathrooms: {listing.bathrooms}</p>
         <p className={styles.area}>Area: {listing.area} sq ft</p>
+        <div style={{display:"flex" , flexDirection:"column"}}> 
         <a 
           href={`tel:${listing.user_id.phone_number}`}
           className={styles.callButton}
         >
           Call
         </a>
+        <br/>
+        <a 
+          href={`${listing.maps_url}`}
+           className={styles.navButton}
+         
+        >
+          navigate
+        </a>
+        </div>
       </div>
       <Footer />
     </div>

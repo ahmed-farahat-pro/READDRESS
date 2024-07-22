@@ -56,6 +56,7 @@
     display: inline-block;
     background-color: #28a745;
     /* Green background */
+    width: 100px;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -69,6 +70,29 @@
 
 .callButton:hover {
     background-color: #218838;
+    /* Darker green for hover */
+    transform: scale(1.05);
+    /* Slightly enlarge on hover */
+}
+
+.navButton {
+    display: inline-block;
+    background-color: #0c75c0;
+    /* Green background */
+    width: 100px;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    /* Smooth transition */
+}
+
+.navButton:hover {
+    background-color: #487696;
     /* Darker green for hover */
     transform: scale(1.05);
     /* Slightly enlarge on hover */
