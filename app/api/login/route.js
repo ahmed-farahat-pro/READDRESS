@@ -1,6 +1,6 @@
 // pages/api/login.js
 import connectToDatabase from '../../lib/mongodb';
-import User from '../../schemas/User'; // Assuming you have a User schema
+import User from '../../schemas/user'; // Assuming you have a User schema
 import { NextResponse } from 'next/server';
 
 export const POST = async (request) => {
