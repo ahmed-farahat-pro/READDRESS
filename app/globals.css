@@ -5,10 +5,10 @@
 /* Define a fixed theme for both dark and light modes */
 :root {
     --foreground-color: #fff;
-    /* Dark gray text color */
-    --background-start-color: #f0f0f0;
+    /* white gray text color */
+    --background-start-color: #000;
     /* Light gray background start */
-    --background-end-color: #ffffff;
+    --background-end-color: #000;
     /* White background end */
 }
 

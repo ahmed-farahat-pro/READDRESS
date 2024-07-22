@@ -87,6 +87,7 @@ export default function Listings() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search by title"
+            style={{color:"#000000"}}
           />
           <button onClick={handleSearch}>Search</button>
         </div>
