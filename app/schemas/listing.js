@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const User = require('./User'); // Import User model
 
 const listingSchema = new Schema({
   user_id: { type: Schema.Types.ObjectId, ref: 'User', required: true },
