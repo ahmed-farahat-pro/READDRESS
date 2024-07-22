@@ -20,7 +20,10 @@ export default function Listings() {
       try {
         // Fetching with cache: 'no-store' to ensure fresh data
         const response = await fetch('/api/listings', {
-          cache: 'no-store',
+          next: {
+      tags: ['listings'],
+      revalidate: 1,
+    },
          
         });
         const data = await response.json();

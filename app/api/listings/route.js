@@ -2,9 +2,10 @@
 // pages/api/listings/index.js
 import Listing from '../../schemas/listing';
 import connectToDatabase from '../../lib/mongodb';
-
+import { revalidateTag } from 'next/cache';
 export const GET = async (request) => {
   try {
+     revalidateTag('blog-posts');
     await connectToDatabase(); // Connect to MongoDB
 
     // Fetch all listings
