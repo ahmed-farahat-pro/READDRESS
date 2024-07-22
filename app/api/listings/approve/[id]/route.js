@@ -1,4 +1,4 @@
-"use client"
+
 import connectToDatabase from '../../../../lib/mongodb';
 import Listing from '../../../../schemas/listing';
 import { NextResponse } from 'next/server';
