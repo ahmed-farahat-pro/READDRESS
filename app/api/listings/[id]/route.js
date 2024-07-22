@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import connectToDatabase from '../../../lib/mongodb';
 import Listing from '../../../schemas/listing';
+
 export const GET = async (request, { params }) => {
   const { id } = params;
 
@@ -18,12 +19,16 @@ export const GET = async (request, { params }) => {
       return NextResponse.notFound();
     }
 
-    return NextResponse.json({ listing }, { status: 200 });
+    // Set no-cache headers
+    const response = NextResponse.json({ listing }, { status: 200 });
+    response.headers.set('Cache-Control', 'no-store');
+    return response;
   } catch (error) {
     console.error('Error fetching listing:', error);
     return NextResponse.json('Internal Server Error', { status: 500 });
   }
 };
+
 export const PATCH = async (request, { params }) => {
   const { id } = params;
   const body = await request.json();
@@ -39,12 +44,16 @@ export const PATCH = async (request, { params }) => {
       return NextResponse.notFound('Listing Not Found');
     }
 
-    return NextResponse.json({ listing }, { status: 200 });
+    // Set no-cache headers
+    const response = NextResponse.json({ listing }, { status: 200 });
+    response.headers.set('Cache-Control', 'no-store');
+    return response;
   } catch (error) {
     console.error('Error updating listing:', error);
     return NextResponse.json('Internal Server Error', { status: 500 });
   }
 };
+
 export const DELETE = async (request, { params }) => {
   const { id } = params;
 
@@ -58,7 +67,10 @@ export const DELETE = async (request, { params }) => {
       return NextResponse.notFound('Listing Not Found');
     }
 
-    return NextResponse.json({ message: 'Listing deleted successfully' }, { status: 200 });
+    // Set no-cache headers
+    const response = NextResponse.json({ message: 'Listing deleted successfully' }, { status: 200 });
+    response.headers.set('Cache-Control', 'no-store');
+    return response;
   } catch (error) {
     console.error('Error deleting listing:', error);
     return NextResponse.json('Internal Server Error', { status: 500 });
