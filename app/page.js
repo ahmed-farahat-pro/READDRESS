@@ -59,11 +59,11 @@ export default function Listings() {
       <div className={styles.container}>
         <Header />
 
-        <Link href={`http://localhost:3000/authenticate`}>
+        <Link href={`./authenticate`}>
           <button>Add New Listing</button>
         </Link>
         <br />
-        <Link href={`http://localhost:3000/authenticate`}>
+        <Link href={`./authenticate`}>
           <button>Edit Listing</button>
         </Link>
         <h1>Listings</h1>
