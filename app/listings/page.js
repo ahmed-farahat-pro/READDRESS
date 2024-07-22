@@ -18,7 +18,10 @@ export default function Listings() {
 
     const fetchListings = async () => {
       try {
-        const response = await fetch('/api/listings');
+        // Fetching with cache: 'no-store' to ensure fresh data
+        const response = await fetch('/api/listings', {
+          cache: 'no-store',
+        });
         const data = await response.json();
 
         if (response.ok) {
@@ -39,7 +42,10 @@ export default function Listings() {
     if (!searchTerm) return;
 
     try {
-      const response = await fetch(`/api/listings/search/${searchTerm}`);
+      // Fetching with cache: 'no-store' to ensure fresh data
+      const response = await fetch(`/api/listings/search/${searchTerm}`, {
+        cache: 'no-store',
+      });
       const data = await response.json();
 
       if (response.ok) {

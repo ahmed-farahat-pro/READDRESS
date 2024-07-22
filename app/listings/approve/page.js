@@ -52,7 +52,9 @@ export default function PendingListings() {
   useEffect(() => {
     const fetchPendingListings = async () => {
       try {
-        const response = await fetch('/api/listings');
+        const response = await fetch('/api/listings', {
+          cache: 'no-store',
+        });
         const data = await response.json();
 
         if (response.ok) {
