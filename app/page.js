@@ -1,27 +1,101 @@
-// pages/register-or-signin.js
-"use client"
+"use client";
+import { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
+import styles from './styles/listings.module.css';
 import Link from 'next/link';
-import styles from './styles/RegisterOrSignIn.module.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
-export default function RegisterOrSignIn() {
-  return (
+export default function Listings() {
+  const searchParams = useSearchParams();
+  const userId = searchParams.get('userId');
+  const [listings, setListings] = useState([]);
+  const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
-    <div>
-    <Header />
-    <div className={styles.container}>
-      <h1>Welcome</h1>
-      <div className={styles.buttons}>
-        <Link href="/signup">
-          <button className={styles.button}>Sign Up</button>
+  useEffect(() => {
+  
+
+    const fetchListings = async () => {
+      try {
+        const response = await fetch('/api/listings');
+        const data = await response.json();
+
+        if (response.ok) {
+          const approvedListings = data.listings.filter(listing => listing.status === 'approved');
+          setListings(approvedListings);
+        } else {
+          setError(data.error);
+        }
+      } catch (error) {
+        setError('Failed to fetch listings');
+      }
+    };
+
+    fetchListings();
+  }, []);
+
+  const handleSearch = async () => {
+    if (!searchTerm) return;
+
+    try {
+      const response = await fetch(`/api/listings/search/${searchTerm}`);
+      const data = await response.json();
+
+      if (response.ok) {
+        const approvedListings = data.listings.filter(listing => listing.status === 'approved');
+        setListings(approvedListings);
+      } else {
+        setError(data.error);
+      }
+    } catch (error) {
+      setError('Failed to fetch listings');
+    }
+  };
+
+
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className={styles.container}>
+        <Header />
+
+        <Link href={`/listings/new?userId=${userId}`}>
+          <button>Add New Listing</button>
         </Link>
-        <Link href="/login">
-          <button className={styles.button}>Log In</button>
+        <br />
+        <Link href={`/listings/edit?userId=${userId}`}>
+          <button>Edit Listing</button>
         </Link>
+        <h1>Listings</h1>
+        <div>
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search by title"
+          />
+          <button onClick={handleSearch}>Search</button>
+        </div>
+        {error && <p className={styles.error}>{error}</p>}
+        <div className={styles.listings}>
+          {listings.map((listing) => (
+            <Link key={listing._id} href={`/listings/show?data=${encodeURIComponent(JSON.stringify(listing))}`} className={styles.cardLink}>
+              <div className={styles.listing}>
+                {listing.images.length > 0 && (
+                  <img
+                    src={listing.images[0].image_url}
+                    alt="Listing Image"
+                    className={styles['image-container']}
+                  />
+                )}
+                <h2>{listing.title}</h2>
+                <p className={styles.price}>{listing.price} EGB</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+        <Footer />
       </div>
-    </div>
- <Footer /> 
-    </div>
+    </Suspense>
   );
 }
