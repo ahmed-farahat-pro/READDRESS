@@ -23,6 +23,7 @@
     "multiparty": "^4.2.3",
     "next": "14.2.4",
     "next-connect": "^1.0.0",
+    "nodemailer": "^6.9.14",
     "react": "^18",
     "react-dom": "^18",
     "styled-components": "^6.1.12",
