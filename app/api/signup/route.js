@@ -5,8 +5,9 @@ import connectToDatabase from '../../lib/mongodb';
 import User from '../../schemas/user';
 import twilio from 'twilio';
 
-const accountSid = 'AC3693837f6c1c3310c3d63780a05142b4';
-const authToken = 'db1b7d5dd5965dcab05001875218228b';
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+
 const client = twilio(accountSid, authToken);
 
 export const POST = async (request) => {
