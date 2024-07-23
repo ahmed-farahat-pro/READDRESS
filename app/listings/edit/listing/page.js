@@ -1,29 +1,27 @@
 "use client";
-import { useState, useEffect, Suspense, lazy } from 'react';
 
+import { useState, useEffect, Suspense, lazy } from 'react';
 import { useSearchParams } from 'next/navigation';
 import axios from 'axios'; // Make sure to import axios
 import styles from '../../../styles/Form.module.css';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import { useRouter } from 'next/router';
-
 // Dynamically import GoogleMaps with React.lazy
 const GoogleMaps = lazy(() => import('../../../components/GoogleMaps'));
 
 export default function EditListing() {
-  
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
   const userId = searchParams.get('userId');
-  const [loading , setLoading]=useState(false);
-
-
+  const [loading, setLoading] = useState(false);
+  const [previews, setPreviews] = useState([]);
   const [googleMapsUrl, setGoogleMapsUrl] = useState('');
- const handleUrlChange=(url)=>{
 
-    setGoogleMapsUrl(url)
-}
+  const handleUrlChange = (url) => {
+    setGoogleMapsUrl(url);
+  }
+
   const [formData, setFormData] = useState({
     user_id: userId,
     title: '',
@@ -54,9 +52,8 @@ export default function EditListing() {
   const fetchListing = async () => {
     try {
       const res = await axios.get(`/api/listings/${id}`);
-      const listing =  res.data.listing;
-   
-      
+      const listing = res.data.listing;
+
       setFormData({
         user_id: userId,
         title: listing.title,
@@ -75,9 +72,12 @@ export default function EditListing() {
         status: listing.status,
         images: listing.images
       });
+
+      const imageUrls = listing.images.map(image => image.image_url);
+      setPreviews(imageUrls);
+
       setGoogleMapsUrl(listing.maps_url);
       setLoading(true);
-      console.log(formData)
     } catch (error) {
       console.error('Error fetching listing:', error);
     }
@@ -88,8 +88,19 @@ export default function EditListing() {
     setFormData({ ...formData, [name]: value });
   };
 
+  const removeImage = (index) => {
+    // Remove from previews
+    const updatedPreviews = previews.filter((_, i) => i !== index);
+    setPreviews(updatedPreviews);
+  };
+
   const handleFileChange = (e) => {
-    setFiles([...e.target.files]);
+    const selectedFiles = Array.from(e.target.files);
+    setFiles([...selectedFiles]);
+
+   
+    const previewUrls = selectedFiles.map(file => URL.createObjectURL(file));
+    setPreviews(prev => [...prev, ...previewUrls]);
   };
 
   const uploadImage = async (file) => {
@@ -123,11 +134,9 @@ export default function EditListing() {
       return;
     }
 
-   
-
     const updatedFormData = {
       ...formData,
-      images: imageUrls.map(url => ({ image_url: url })),
+      images: [...formData.images, ...imageUrls.map(url => ({ image_url: url }))],
       maps_url: googleMapsUrl,
       status: 'pending'
     };
@@ -147,17 +156,17 @@ export default function EditListing() {
 
       const result = await response.json();
       alert('Listing updated successfully');
-   
     } catch (error) {
       console.error(error);
       alert('Error updating listing');
     }
   };
-if (!loading){
-    return <div>......loading</div>
-}
+
+  if (!loading) {
+    return <div>......loading</div>;
+  }
+
   return (
-    
     <div>
       <Header isLoggedIn={true} />
       <div className={styles.container}>
@@ -170,11 +179,9 @@ if (!loading){
               name="title"
               value={formData.title}
               onChange={handleChange}
-             
               className={styles.input}
               placeholder={formData.title}
             />
-            
           </label>
           <label className={styles.label}>
             Description:
@@ -182,10 +189,8 @@ if (!loading){
               name="description"
               value={formData.description}
               onChange={handleChange}
-             
               className={styles.textarea}
             />
-               
           </label>
           <label className={styles.label}>
             Price:
@@ -194,7 +199,6 @@ if (!loading){
               name="price"
               value={formData.price}
               onChange={handleChange}
-            
               className={styles.input}
             />
           </label>
@@ -205,7 +209,6 @@ if (!loading){
               name="address"
               value={formData.address}
               onChange={handleChange}
-             
               className={styles.input}
             />
           </label>
@@ -216,7 +219,6 @@ if (!loading){
               name="city"
               value={formData.city}
               onChange={handleChange}
-             
               className={styles.input}
             />
           </label>
@@ -227,7 +229,6 @@ if (!loading){
               name="state"
               value={formData.state}
               onChange={handleChange}
-           
               className={styles.input}
             />
           </label>
@@ -238,7 +239,6 @@ if (!loading){
               name="zip_code"
               value={formData.zip_code}
               onChange={handleChange}
-             
               className={styles.input}
             />
           </label>
@@ -249,7 +249,6 @@ if (!loading){
               name="country"
               value={formData.country}
               onChange={handleChange}
-           
               className={styles.input}
             />
           </label>
@@ -260,7 +259,6 @@ if (!loading){
               name="property_type"
               value={formData.property_type}
               onChange={handleChange}
-        
               className={styles.input}
             />
           </label>
@@ -271,7 +269,6 @@ if (!loading){
               name="bedrooms"
               value={formData.bedrooms}
               onChange={handleChange}
-          
               className={styles.input}
             />
           </label>
@@ -282,7 +279,6 @@ if (!loading){
               name="bathrooms"
               value={formData.bathrooms}
               onChange={handleChange}
-            
               className={styles.input}
             />
           </label>
@@ -293,7 +289,6 @@ if (!loading){
               name="area"
               value={formData.area}
               onChange={handleChange}
-             
               className={styles.input}
             />
           </label>
@@ -306,12 +301,25 @@ if (!loading){
               className={styles.input}
             />
           </label>
+          
+          <div className={styles.imagePreviewContainer}>
+            {previews.map((preview, index) => (
+              <div key={index} className={styles.imagePreview}>
+                <img src={preview} alt={`Preview ${index}`} className={styles.previewImage} />
+                <button type="button" onClick={() => removeImage(index)} className={styles.removeButton}>
+                  Remove
+                </button>
+              </div>
+            ))}
+          </div>
+          
           <div>
             <Suspense fallback={<div>Loading Google Maps...</div>}>
               <GoogleMaps onUrlChange={handleUrlChange} />
             </Suspense>
             <p>URL for clicked location: {googleMapsUrl}</p>
           </div>
+          
           <button type="submit" className={styles.button}>Update Listing</button>
         </form>
       </div>
