@@ -42,7 +42,7 @@ export default function SignUp() {
       const data = await response.json();
       console.log('Sign Up Response:', data);
       // Redirect to OTP verification page
-      window.location.href = 'http://localhost:3000/verify-otp';
+      window.location.href = '/verify-otp';
     } catch (error) {
       console.error('Sign Up Error:', error.message);
     }
