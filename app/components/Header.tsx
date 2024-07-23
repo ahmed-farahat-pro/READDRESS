@@ -16,7 +16,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
       
       <nav className="flex gap-4">
         {isLoggedIn ? (
-          <Link href="/logout" className="text-gray-800 hover:underline">
+          <Link href="/" className="text-gray-800 hover:underline">
             Log Out
           </Link>
         ) : null}
