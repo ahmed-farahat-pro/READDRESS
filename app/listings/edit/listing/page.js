@@ -54,7 +54,8 @@ export default function EditListing() {
   const fetchListing = async () => {
     try {
       const res = await axios.get(`/api/listings/${id}`);
-      const listing = res.data;
+      const listing =  res.data.listing;
+   
       
       setFormData({
         user_id: userId,
@@ -76,6 +77,7 @@ export default function EditListing() {
       });
       setGoogleMapsUrl(listing.maps_url);
       setLoading(true);
+      console.log(formData)
     } catch (error) {
       console.error('Error fetching listing:', error);
     }
@@ -172,7 +174,7 @@ if (!loading){
               className={styles.input}
               placeholder={formData.title}
             />
-            <h1 style={{color:"#fff"}}>{formData.title}</h1>
+            
           </label>
           <label className={styles.label}>
             Description:
