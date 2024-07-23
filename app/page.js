@@ -57,7 +57,7 @@ export default function Listings() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div className={styles.container}>
-        <Header />
+       <Header isLoggedIn={false} />
 
         <Link href={`./authenticate`}>
           <button>Add New Listing</button>

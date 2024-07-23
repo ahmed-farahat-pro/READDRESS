@@ -90,7 +90,7 @@ export default function Listings() {
 
   return (
     <div>
-      <Header />
+     <Header isLoggedIn={true} />
       <div className={styles.container}>
         <h1>My Listings</h1>
         <Link href={`/listings/new?userId=${userId}`}>

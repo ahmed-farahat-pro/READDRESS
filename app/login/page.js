@@ -48,7 +48,7 @@ export default function LogIn() {
 
   return (
      <div>  
-    <div>   <Header /></div>
+    <div>   <Header isLoggedIn={false} /></div>
     <div className={styles.container}>
       
       <h1>Log In</h1>

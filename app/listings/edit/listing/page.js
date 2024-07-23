@@ -159,7 +159,7 @@ if (!loading){
   return (
     
     <div>
-      <Header />
+      <Header isLoggedIn={true} />
       <div className={styles.container}>
         <h1>Edit Listing</h1>
         <form onSubmit={handleSubmit} className={styles.form}>

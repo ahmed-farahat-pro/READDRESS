@@ -16,7 +16,7 @@ export default function ListingShow() {
 
   return (
     <div className={styles.container}>
-      <Header />
+     <Header isLoggedIn={false} />
       <div className={styles.listingDetails}>
         <Slideshow imageUrls={listing.images} />
         <h1 className={styles.title}>{listing.title}</h1>

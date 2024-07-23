@@ -122,7 +122,7 @@ export default function AddListing() {
 
   return (
     <div>
-      <Header />
+       <Header isLoggedIn={true} />
       <div className={styles.container}>
         <h1>Add New Listing</h1>
         <form onSubmit={handleSubmit} className={styles.form}>
