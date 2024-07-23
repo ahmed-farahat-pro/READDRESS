@@ -2,12 +2,12 @@
 
 import { useState, useEffect, Suspense, lazy } from 'react';
 import { useSearchParams } from 'next/navigation';
-import axios from 'axios'; // Make sure to import axios
+import axios from 'axios';
 import styles from '../../../styles/Form.module.css';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import { useRouter } from 'next/router';
-// Dynamically import GoogleMaps with React.lazy
+
 const GoogleMaps = lazy(() => import('../../../components/GoogleMaps'));
 
 export default function EditListing() {
@@ -89,18 +89,8 @@ export default function EditListing() {
   };
 
   const removeImage = (index) => {
-    // Remove from previews
     const updatedPreviews = previews.filter((_, i) => i !== index);
     setPreviews(updatedPreviews);
-  };
-
-  const handleFileChange = (e) => {
-    const selectedFiles = Array.from(e.target.files);
-    setFiles([...selectedFiles]);
-
-   
-    const previewUrls = selectedFiles.map(file => URL.createObjectURL(file));
-    setPreviews(prev => [...prev, ...previewUrls]);
   };
 
   const uploadImage = async (file) => {
@@ -125,21 +115,33 @@ export default function EditListing() {
     }
   };
 
+  const handleFileChange = async (e) => {
+    const selectedFiles = Array.from(e.target.files);
+    setFiles([...selectedFiles]);
+
+    const newPreviews = [];
+    for (const file of selectedFiles) {
+      const imageUrl = await uploadImage(file);
+      if (imageUrl) {
+        newPreviews.push(imageUrl);
+      } else {
+        console.error(`Failed to upload ${file.name}`);
+      }
+    }
+    
+    setPreviews(prev => [...prev, ...newPreviews]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const imageUrls = await Promise.all(files.map(file => uploadImage(file)));
-    if (imageUrls.some(url => url === null)) {
-      alert('Failed to upload one or more images');
-      return;
-    }
-
     const updatedFormData = {
       ...formData,
-      images: [...formData.images, ...imageUrls.map(url => ({ image_url: url }))],
+      images: previews.map(url => ({ image_url: url })),
       maps_url: googleMapsUrl,
       status: 'pending'
     };
+    console.log(updatedFormData);
 
     try {
       const response = await fetch(`/api/listings/${id}`, {
