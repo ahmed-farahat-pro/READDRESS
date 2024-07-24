@@ -26,13 +26,7 @@ const ListingItem = ({ listing, onApprove, onDelete }) => (
       <GoogleMaps googleMapsUrl={listing.maps_url} />
     </div>
     
-    <a 
-      href={`tel:${listing.user_id.phone_number}`}
-      style={{ backgroundColor: 'blue', color: 'white', padding: '10px', border: 'none', borderRadius: '5px', cursor: 'pointer', textDecoration: 'none', display: 'inline-block', marginTop: '10px' }}
-    >
-      Call
-    </a>
-
+  
     {listing.status === 'pending' && (
       <div>
         <button onClick={() => onApprove(listing._id)}>Approve</button>
