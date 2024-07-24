@@ -21,7 +21,7 @@ export default function ListingShow() {
         <Slideshow imageUrls={listing.images} />
         <h1 className={styles.title}>{listing.title}</h1>
         <p className={styles.description}>{listing.description}</p>
-        <p className={styles.price}>Price: {listing.price} EGB</p>
+        <p className={styles.price}>Price: {listing.price} EGP</p>
         <p className={styles.address}>
           Address: {listing.address}, {listing.city}, {listing.state}, {listing.zip_code}, {listing.country}
         </p>

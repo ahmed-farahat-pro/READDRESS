@@ -12,6 +12,7 @@ export default function Listings() {
   const [listings, setListings] = useState([]);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [loading , setLoading] = useState(true);
 
   useEffect(() => {
     if (!userId) return;
@@ -31,6 +32,7 @@ export default function Listings() {
         if (response.ok) {
           const approvedListings = data.listings.filter(listing => listing.status === 'approved');
           setListings(approvedListings);
+          setLoading(false);
         } else {
           setError(data.error);
         }
@@ -73,7 +75,7 @@ export default function Listings() {
       <div className={styles.container}>
          <Header isLoggedIn={true} />
 
-<div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+<div style={{ display: "flex", flexDirection: "row", gap: "10px" , justifyContent:"space-between" }}>
       <Link href={`/listings/new?userId=${userId}`}>
     <button style={{ backgroundColor: "white", border: "1px solid black", padding: "10px 20px" ,color:"#000000",borderRadius:"10px"}}>
       New
@@ -118,23 +120,35 @@ export default function Listings() {
 </div>
 
         {error && <p className={styles.error}>{error}</p>}
-        <div className={styles.listings}>
-          {listings.map((listing) => (
-            <Link key={listing._id} href={`/listings/show?data=${encodeURIComponent(JSON.stringify(listing))}`} className={styles.cardLink}>
-              <div className={styles.listing}>
-                {listing.images.length > 0 && (
-                  <img
-                    src={listing.images[0].image_url}
-                    alt="Listing Image"
-                    className={styles['image-container']}
-                  />
-                )}
-                <h2>{listing.title}</h2>
-                <p className={styles.price}>{listing.price} EGB</p>
-              </div>
-            </Link>
-          ))}
+
+  {!loading ? (
+  <div className={styles.listings}>
+    {listings.map((listing) => (
+      <Link
+        key={listing._id}
+        href={`/listings/show?data=${encodeURIComponent(JSON.stringify(listing))}`}
+        className={styles.cardLink}
+      >
+        <div className={styles.listing}>
+          {listing.images.length > 0 && (
+            <img
+              src={listing.images[0].image_url}
+              alt="Listing Image"
+              className={styles['image-container']}
+            />
+          )}
+          <h2>{listing.title}</h2>
+          <p className={styles.price}>{listing.price} EGP</p>
         </div>
+      </Link>
+    ))}
+  </div>
+) : (
+  <div className={styles.loading}>
+    <p>Loading...</p>
+  </div>
+)}
+
         <Footer />
       </div>
     </Suspense>
