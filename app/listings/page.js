@@ -73,24 +73,50 @@ export default function Listings() {
       <div className={styles.container}>
          <Header isLoggedIn={true} />
 
-        <Link href={`/listings/new?userId=${userId}`}>
-          <button>Add New Listing</button>
-        </Link>
-        <br />
-        <Link href={`/listings/edit?userId=${userId}`}>
-          <button>Edit Listing</button>
-        </Link>
-        <h1>Listings</h1>
-        <div>
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search by title"
-            style={{color:"#000000"}}
-          />
-          <button onClick={handleSearch}>Search</button>
-        </div>
+<div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+      <Link href={`/listings/new?userId=${userId}`}>
+    <button style={{ backgroundColor: "white", border: "1px solid black", padding: "10px 20px" ,color:"#000000",borderRadius:"10px"}}>
+      New
+    </button>
+  </Link>
+     <Link href={`/listings/edit?userId=${userId}`}>
+    <button style={{ backgroundColor: "white", border: "1px solid black", padding: "10px 20px" , color:"#000000",borderRadius:"10px"}}>
+      Edit
+    </button>
+  </Link>
+</div>
+  
+        
+   
+       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10px", padding: "20px" }}>
+  <input
+    type="text"
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    placeholder="Search by title"
+    style={{
+      backgroundColor: "white",
+      border: "1px solid black",
+      padding: "10px 20px",
+      color: "#000000",
+      borderRadius: "4px",
+      width: "200px",
+    }}
+  />
+  <button
+    onClick={handleSearch}
+    style={{
+      backgroundColor: "white",
+      border: "1px solid black",
+      padding: "10px 20px",
+      color: "#000000",
+      borderRadius: "4px",
+    }}
+  >
+    Search
+  </button>
+</div>
+
         {error && <p className={styles.error}>{error}</p>}
         <div className={styles.listings}>
           {listings.map((listing) => (
