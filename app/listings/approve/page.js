@@ -1,136 +1,127 @@
 "use client";
-import { useEffect, useState, Suspense } from 'react';
-import GoogleMaps from '../../components/GoogleMapsRender'; // Adjust import path as needed
+import { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import styles from '../../styles/listings.module.css';
+import Link from 'next/link';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
-// Fallback component to show while data is loading or if an error occurs
-const LoadingFallback = () => <div>Loading...</div>;
-const ErrorFallback = ({ error }) => <div className={styles.error}>{error}</div>;
-
-const ListingItem = ({ listing, onApprove, onDelete }) => (
-  <div key={listing._id} className={styles.listing}>
-    <h2>{listing.title}</h2>
-    <p>{listing.description}</p>
-    <p>Price: ${listing.price}</p>
-    <p>Bedrooms: {listing.bedrooms}</p>
-    <p>Bathrooms: {listing.bathrooms}</p>
-    <div className={styles.images}>
-      {listing.images.map((image, index) => (
-        <img key={index} src={image.image_url} alt={`Image ${index + 1}`} />
-      ))}
-    </div>
-    <p>Status: {listing.status}</p>
-
-    <div>
-      <h1>Google Maps Location</h1>
-      <GoogleMaps googleMapsUrl={listing.maps_url} />
-    </div>
-    
-  
-    {listing.status === 'pending' && (
-      <div>
-        <button onClick={() => onApprove(listing._id)}>Approve</button>
-      </div>
-    )}
-
-    <div> 
-      <button onClick={() => onDelete(listing._id)}>Delete</button>
-    </div>
-  </div>
-);
-
-export default function PendingListings() {
+export default function Listings() {
+  const searchParams = useSearchParams();
   const [listings, setListings] = useState([]);
   const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+    const [loading , setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchPendingListings = async () => {
+  
+
+    const fetchListings = async () => {
       try {
-        const response = await fetch('/api/listings', {
-          cache: 'no-store',
-           next: {
-      revalidate: 2, // 1 hour
-    },
-        });
+        const response = await fetch('/api/listings');
         const data = await response.json();
 
         if (response.ok) {
-          // Filter pending and approved listings
-          const filteredListings = data.listings.filter(listing =>
-            listing.status === 'pending' || listing.status === 'approved'
-          );
-          setListings(filteredListings);
+          const approvedListings = data.listings;
+          setListings(approvedListings);
+          setLoading(false);
         } else {
-          setError(data.error || 'Failed to fetch listings');
+          setError(data.error);
         }
       } catch (error) {
         setError('Failed to fetch listings');
       }
     };
 
-    fetchPendingListings();
+    fetchListings();
   }, []);
 
-  const approveListing = async (listingId) => {
-    try {
-      const response = await fetch(`/api/listings/approve/${listingId}`, {
-        method: 'PUT',
-      });
+  const handleSearch = async () => {
+    if (!searchTerm) return;
 
+    try {
+      const response = await fetch(`/api/listings/search/${searchTerm}`);
       const data = await response.json();
 
       if (response.ok) {
-        // Update the UI to reflect the approved listing
-        setListings(prevListings =>
-          prevListings.map(listing =>
-            listing._id === listingId ? { ...listing, status: 'approved' } : listing
-          )
-        );
+        const approvedListings = data.listings;
+        setListings(approvedListings);
       } else {
-        setError(data.error || 'Failed to approve listing');
+        setError(data.error);
       }
     } catch (error) {
-      setError('An error occurred. Please try again.');
+      setError('Failed to fetch listings');
     }
   };
 
-  const deleteListing = async (listingId) => {
-    try {
-      const response = await fetch(`/api/listings/${listingId}`, {
-        method: 'DELETE',
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // Remove the deleted listing from UI
-        setListings(prevListings =>
-          prevListings.filter(listing => listing._id !== listingId)
-        );
-      } else {
-        setError(data.error || 'Failed to delete listing');
-      }
-    } catch (error) {
-      setError('An error occurred. Please try again.');
-    }
-  };
 
   return (
-    <div className={styles.container}>
-      <h1>Pending and Approved Listings</h1>
-      {error && <ErrorFallback error={error} />}
-      <Suspense fallback={<LoadingFallback />}>
-        <div className={styles.listings}>
-          {listings.map((listing) => (
-            <ListingItem
-              key={listing._id}
-              listing={listing}
-              onApprove={approveListing}
-              onDelete={deleteListing}
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className={styles.container}>
+       <Header isLoggedIn={false} />
+
+
+        
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10px", padding: "20px" }}>
+  <input
+    type="text"
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    placeholder="Search by title"
+    style={{
+      backgroundColor: "white",
+      border: "1px solid black",
+      padding: "10px 20px",
+      color: "#000000",
+      borderRadius: "4px",
+      width: "200px",
+    }}
+  />
+  <button
+    onClick={handleSearch}
+    style={{
+      backgroundColor: "white",
+      border: "1px solid black",
+      padding: "10px 20px",
+      color: "#000000",
+      borderRadius: "4px",
+    }}
+  >
+    Search
+  </button>
+</div>
+
+        {error && <p className={styles.error}>{error}</p>}
+      {!loading ? (
+  <div className={styles.listings}>
+    {listings.map((listing) => (
+      <Link
+        key={listing._id}
+        href={`/listings/approve/validate?data=${encodeURIComponent(JSON.stringify(listing))}`}
+        className={styles.cardLink}
+      >
+        <div className={styles.listing}>
+          {listing.images.length > 0 && (
+            <img
+              src={listing.images[0].image_url}
+              alt="Listing Image"
+              className={styles['image-container']}
             />
-          ))}
+          )}
+          <h2>{listing.title}</h2>
+          <p className={styles.price}>{listing.price} EGP</p>
         </div>
-      </Suspense>
-    </div>
+      </Link>
+    ))}
+  </div>
+) : (
+  <div className={styles.loading}>
+    <p>Loading...</p>
+  </div>
+)}
+
+        <Footer />
+      </div>
+    </Suspense>
   );
 }
