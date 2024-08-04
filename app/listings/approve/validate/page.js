@@ -1,16 +1,19 @@
 "use client";
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams,useRouter } from 'next/navigation';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import styles from '../../../styles/listingShow.module.css';
 import Slideshow from '../../../components/SlideShow';
+import { useState } from 'react';
+
 
 export default function ListingShow() {
   const searchParams = useSearchParams();
   const data = searchParams.get('data');
-  
+  const Router = useRouter();
   const listing = data ? JSON.parse(data) : null;
-
+  const[error,setError]= useState();
+  
  const approveListing = async (listingId) => {
     try {
       const response = await fetch(`/api/listings/approve/${listingId}`, {
@@ -18,14 +21,17 @@ export default function ListingShow() {
       });
 
       const data = await response.json();
-
+      
+     
       if (response.ok) {
         // Update the UI to reflect the approved listing
-        setListings(prevListings =>
-          prevListings.map(listing =>
-            listing._id === listingId ? { ...listing, status: 'approved' } : listing
-          )
-        );
+         alert("approved");
+            window.location.href = "../../listings/approve";
+    
+        
+              
+ 
+        
       } else {
         setError(data.error || 'Failed to approve listing');
       }
@@ -41,12 +47,17 @@ export default function ListingShow() {
       });
 
       const data = await response.json();
-
+      console.log(response)
+     
+   
       if (response.ok) {
         // Remove the deleted listing from UI
-        setListings(prevListings =>
-          prevListings.filter(listing => listing._id !== listingId)
-        );
+            alert("deleted");
+         window.location.href = "../../listings/approve";
+  
+       
+   
+ 
       } else {
         setError(data.error || 'Failed to delete listing');
       }
@@ -75,7 +86,9 @@ export default function ListingShow() {
         <p className={styles.bathrooms}>Bathrooms: {listing.bathrooms}</p>
         <p className={styles.area}>Area: {listing.area} sq ft</p>
         <div style={{display:"flex" , flexDirection:"column"}}> 
-        <a 
+    
+        <br/>
+              <a 
           href={`tel:${listing.user_id.phone_number}`}
           className={styles.callButton}
         >
