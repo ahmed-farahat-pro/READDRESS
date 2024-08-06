@@ -8,6 +8,7 @@ import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 
 export default function AddListing() {
+    const buyitorrent = ['buy' , 'rent'];
      const propertyTypes = [
     'Apartment',
     'House',
@@ -46,6 +47,7 @@ export default function AddListing() {
     zip_code: '',
     country: '',
     property_type: '',
+        buy:'',
     bedrooms: '',
     bathrooms: '',
     area: '',
@@ -249,6 +251,23 @@ export default function AddListing() {
             >
               <option style={{color:"#000"}} value="" disabled>Select property type</option>
               {propertyTypes.map(type => (
+                <option  style={{color:"#000"}}  key={type} value={type}>{type}</option>
+              ))}
+            </select>
+          </label>
+
+            <label className={styles.label}>
+            Buy or rent :
+            <select
+              name="property_type"
+              value={formData.buy}
+              onChange={handleChange}
+              required
+              className={styles.select}
+              style={{color:"#000"}} 
+            >
+              
+              {buyitorrent.map(type => (
                 <option  style={{color:"#000"}}  key={type} value={type}>{type}</option>
               ))}
             </select>

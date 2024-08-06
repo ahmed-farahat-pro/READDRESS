@@ -42,6 +42,7 @@ property_type: {
   ]
 }
 ,
+  buy: { type: String, required: true, enum: ['buy', 'rent'] },
   bedrooms: { type: Number, required: true },
   bathrooms: { type: Number, required: true },
   area: { type: Number, required: true },
