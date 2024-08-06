@@ -60,13 +60,14 @@ export const POST = async (request) => {
       zip_code,
       country,
       property_type,
-          buy,
+     buy,
       bedrooms,
       bathrooms,
       area,
       status,
       images
     });
+    console.log(newListing);
 
     await newListing.save();
 
