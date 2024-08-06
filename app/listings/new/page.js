@@ -8,6 +8,30 @@ import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 
 export default function AddListing() {
+     const propertyTypes = [
+    'Apartment',
+    'House',
+    'Condo',
+    'Villa',
+    'Townhouse',
+    'Studio',
+    'Penthouse',
+    'Duplex',
+    'Triplex',
+    'Loft',
+    'Flat',
+    'Bungalow',
+    'Cottage',
+    'Mansion',
+    'Farmhouse',
+    'Land',
+    'Commercial',
+    'Office Space',
+    'Retail Space',
+    'Warehouse',
+    'Industrial'
+  ];
+
   const searchParams = useSearchParams();
   const [googleMapsUrl, setGoogleMapsUrl] = useState('');
   const [formData, setFormData] = useState({
@@ -215,14 +239,19 @@ export default function AddListing() {
           </label>
           <label className={styles.label}>
             Property Type:
-            <input
-              type="text"
+            <select
               name="property_type"
               value={formData.property_type}
               onChange={handleChange}
               required
-              className={styles.input}
-            />
+              className={styles.select}
+              style={{color:"#000"}} 
+            >
+              <option style={{color:"#000"}} value="" disabled>Select property type</option>
+              {propertyTypes.map(type => (
+                <option  style={{color:"#000"}}  key={type} value={type}>{type}</option>
+              ))}
+            </select>
           </label>
           <label className={styles.label}>
             Bedrooms:
