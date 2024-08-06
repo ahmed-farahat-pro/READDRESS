@@ -60,6 +60,7 @@ export default function AddListing() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    console.log(name , value)
   };
 
   const handleUrlChange = (url)=>{
@@ -259,14 +260,14 @@ export default function AddListing() {
             <label className={styles.label}>
             Buy or rent :
             <select
-              name="property_type"
+              name="buy"
               value={formData.buy}
               onChange={handleChange}
               required
               className={styles.select}
               style={{color:"#000"}} 
             >
-              
+            
               {buyitorrent.map(type => (
                 <option  style={{color:"#000"}}  key={type} value={type}>{type}</option>
               ))}
