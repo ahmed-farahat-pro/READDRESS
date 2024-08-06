@@ -110,6 +110,7 @@ export default function Listings() {
           )}
           <h2>{listing.title}</h2>
           <p className={styles.price}>{listing.price} EGP</p>
+           <p className={styles.price}>{listing.status} </p>
         </div>
       </Link>
     ))}

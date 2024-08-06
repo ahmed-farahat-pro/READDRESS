@@ -23,14 +23,15 @@ export default function Listings() {
   };
 
   const applyFilters = () => {
-    const { propertyType = [], priceRange = [0, 1000000], areaRange = [0, 10000], bedrooms = [], bathrooms = [] } = filters;
+    const { propertyType = [], priceRange = [0, 1000000], areaRange = [0, 10000], bedrooms = [], bathrooms = [], rentalType = [] } = filters;
     const filtered = listings.filter(listing => {
       const matchesPropertyType = propertyType.length === 0 || propertyType.includes(listing.property_type);
       const matchesPrice = listing.price >= priceRange[0] && listing.price <= priceRange[1];
       const matchesArea = listing.area >= areaRange[0] && listing.area <= areaRange[1];
       const matchesBedrooms = bedrooms.length === 0 || bedrooms.includes(listing.bedrooms);
       const matchesBathrooms = bathrooms.length === 0 || bathrooms.includes(listing.bathrooms);
-      return matchesPropertyType && matchesPrice && matchesArea && matchesBedrooms && matchesBathrooms;
+      const matchesRentalType = rentalType.length === 0 || rentalType.includes(listing.buy); // Check rental type
+      return matchesPropertyType && matchesPrice && matchesArea && matchesBedrooms && matchesBathrooms && matchesRentalType;
     });
     setFilteredListings(filtered);
   };
@@ -88,14 +89,14 @@ export default function Listings() {
     <Suspense fallback={<div>Loading...</div>}>
       <div className={styles.container}>
         <Header isLoggedIn={false} />
-        <div style={{ display: "flex", flexDirection: "row", gap: "10px", justifyContent:"space-between" }}>
-          <Link href={`./authenticate`}>
-            <button style={{ backgroundColor: "white", border: "1px solid black", padding: "10px 20px" ,color:"#000000",borderRadius:"10px"}}>
+        <div style={{ display: "flex", flexDirection: "row", gap: "10px", justifyContent: "space-between" }}>
+          <Link href="./authenticate">
+            <button style={{ backgroundColor: "white", border: "1px solid black", padding: "10px 20px", color: "#000000", borderRadius: "10px" }}>
               New
             </button>
           </Link>
-          <Link href={`./authenticate`}>
-            <button style={{ backgroundColor: "white", border: "1px solid black", padding: "10px 20px" , color:"#000000",borderRadius:"10px"}}>
+          <Link href="./authenticate">
+            <button style={{ backgroundColor: "white", border: "1px solid black", padding: "10px 20px", color: "#000000", borderRadius: "10px" }}>
               Edit
             </button>
           </Link>
@@ -128,21 +129,17 @@ export default function Listings() {
           >
             Search
           </button>
-         {/* Sidebar toggle button */}
-      <button className={styles.sidebarToggle} onClick={toggleSidebar}>
-        {sidebarVisible ? 'Hide Filters' : 'Show Filters'}
-      </button>
+          {/* Sidebar toggle button */}
+          <button className={styles.sidebarToggle} onClick={toggleSidebar}>
+            {sidebarVisible ? 'Hide Filters' : 'Show Filters'}
+          </button>
         </div>
 
-        <div style={{display:"flex" , flexDirection:"row"}}>  
-
-      
- 
-
-      {/* Sidebar */}
-     <div className={`${styles.xyz} ${sidebarVisible ? styles['xyz-show'] : styles['xyz-hidden']}`}>
-        <FilterSidebar />
-      </div>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          {/* Sidebar */}
+          <div className={`${styles.xyz} ${sidebarVisible ? styles['xyz-show'] : styles['xyz-hidden']}`}>
+            <FilterSidebar onFilterChange={handleFilterChange} />
+          </div>
 
           {error && <p className={styles.error}>{error}</p>}
           {!loading ? (
