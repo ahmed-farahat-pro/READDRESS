@@ -1,0 +1,63 @@
+/* styles/FilterSidebar.module.css */
+
+.sidebar {
+    width: 250px;
+    background-color: #000;
+    padding: 20px;
+    position: fixed;
+    /* Make sure it's fixed to the screen */
+    top: 120px;
+    left: 0;
+    height: 80%;
+    overflow-y: auto;
+    /* Add scrolling if needed */
+    transition: transform 0.3s ease;
+    /* Smooth transition */
+}
+
+/* Default hidden style (to be overridden by media query) */
+.hidden {
+    transform: translateX(-100%);
+    /* Move off-screen */
+    display: none;
+    /* Hide the sidebar */
+}
+
+/* Default shown style (to be overridden by media query) */
+.show {
+    transform: translateX(0);
+    /* Move into view */
+    display: block;
+    /* Make sure it's visible */
+}
+
+.filterGroup {
+    margin-bottom: 20px;
+}
+
+.filterGroup h3 {
+    margin-bottom: 10px;
+}
+
+.filterGroup label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Media query for small devices */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        /* Hide sidebar off-screen */
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+        /* Show sidebar in view */
+    }
+
+    /* Show the toggle button */
+    .sidebarToggle {
+        display: block;
+    }
+}
