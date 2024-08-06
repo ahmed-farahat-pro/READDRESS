@@ -9,11 +9,6 @@ const FilterSidebar = ({ onFilterChange }) => {
     bedrooms: [],
     bathrooms: []
   });
-   const [sidebarVisible, setSidebarVisible] = useState(false);
-
-  const toggleSidebar = () => {
-    setSidebarVisible(!sidebarVisible);
-  };
 
   const handleCheckboxChange = (e, filterType) => {
     const { value, checked } = e.target;
@@ -64,11 +59,9 @@ const FilterSidebar = ({ onFilterChange }) => {
   return (
        
     <div >
-           <button className={styles.sidebarToggle} onClick={toggleSidebar}>
-        {sidebarVisible ? 'Hide Filters' : 'Show Filters'}
-      </button>
-       <div className=  {` styles.sidebar ${sidebarVisible ? styles.show : styles.hidden}`}>
- <h2>Filters</h2>
+     
+       <div className=  {styles.sidebar}>
+
 
       <div className={styles.filterGroup}>
         <h3>Property Type</h3>

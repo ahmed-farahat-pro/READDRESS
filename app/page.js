@@ -16,7 +16,7 @@ export default function Listings() {
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({});
-   const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [sidebarVisible, setSidebarVisible] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
@@ -128,13 +128,20 @@ export default function Listings() {
           >
             Search
           </button>
+         {/* Sidebar toggle button */}
+      <button className={styles.sidebarToggle} onClick={toggleSidebar}>
+        {sidebarVisible ? 'Hide Filters' : 'Show Filters'}
+      </button>
         </div>
 
         <div style={{display:"flex" , flexDirection:"row"}}>  
 
       
-      <div >
-        <FilterSidebar onFilterChange={handleFilterChange} />
+ 
+
+      {/* Sidebar */}
+     <div className={`${styles.xyz} ${sidebarVisible ? styles['xyz-show'] : styles['xyz-hidden']}`}>
+        <FilterSidebar />
       </div>
 
           {error && <p className={styles.error}>{error}</p>}
