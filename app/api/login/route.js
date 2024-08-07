@@ -25,7 +25,8 @@ export const POST = async (request) => {
     const userData = {
       userId: user._id.toString(), // Convert ObjectId to string
       email: user.email,
-      type: user.type, // Return user type (admin or customer)
+      type: user.type, 
+      first_name : user.first_name// Return user type (admin or customer)
       // Add other necessary fields
     };
 

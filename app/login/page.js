@@ -34,7 +34,8 @@ export default function LogIn() {
           window.location.href = '/listings/approve'; // Example admin dashboard route
         } else {
             console.log(data)
-          window.location.href = `/listings?userId=${data.userId}`; // Customer dashboard route
+         window.location.href = `/listings?userId=${encodeURIComponent(data.userId)}&name=${encodeURIComponent(data.first_name)}`;
+
         }
       } else {
         setError(data.error);

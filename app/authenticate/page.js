@@ -12,6 +12,7 @@ export default function RegisterOrSignIn() {
     <Header />
     <div className={styles.container}>
       
+      <p> </p>
       <div className={styles.buttons}>
         <Link href="/signup">
           <button className={styles.button}>Sign Up</button>

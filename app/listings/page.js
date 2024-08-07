@@ -9,6 +9,7 @@ import Footer from '../components/Footer';
 export default function Listings() {
   const searchParams = useSearchParams();
   const userId = searchParams.get('userId');
+   const name = searchParams.get('name');
   const [listings, setListings] = useState([]);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -73,7 +74,7 @@ export default function Listings() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div className={styles.container}>
-         <Header isLoggedIn={true} />
+         <Header isLoggedIn={true}  userName={name}/>
 
 <div style={{ display: "flex", flexDirection: "row", gap: "10px" , justifyContent:"space-between" }}>
       <Link href={`/listings/new?userId=${userId}`}>
