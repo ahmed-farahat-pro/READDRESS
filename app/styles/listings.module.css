@@ -20,6 +20,16 @@
     display: none;
 }
 
+/* Show the toggle button on small screens */
+
+    .sidebarToggle {
+        position: fixed;
+        background-color: #fff;
+        color: black;
+        width: 100px;
+        height:50px;
+        border-radius: 10px;
+    }
 
 .listing {
     background-color: #fff;

@@ -101,8 +101,11 @@ export default function Listings() {
             </button>
           </Link>
         </div>
-
+  <button className={styles.sidebarToggle} onClick={toggleSidebar}>
+            {sidebarVisible ? 'Hide Filters' : 'Show Filters'}
+          </button>
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10px", padding: "20px" }}>
+            
           <input
             type="text"
             value={searchTerm}
@@ -130,9 +133,7 @@ export default function Listings() {
             Search
           </button>
           {/* Sidebar toggle button */}
-          <button className={styles.sidebarToggle} onClick={toggleSidebar}>
-            {sidebarVisible ? 'Hide Filters' : 'Show Filters'}
-          </button>
+        
         </div>
 
         <div>
