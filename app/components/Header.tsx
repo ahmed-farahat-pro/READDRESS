@@ -15,7 +15,8 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn, userName }) => {
   const handleUserIconClick = () => {
     if (!isLoggedIn) {
       // Redirect to login/sign-up page if not logged in
-      window.location.href = '/authenticate'; // or '/signup' based on your preference
+      setDropdownOpen(!isDropdownOpen);
+    
     } else {
       // Toggle dropdown menu if logged in
       setDropdownOpen(!isDropdownOpen);
@@ -26,6 +27,16 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn, userName }) => {
     // Implement logout logic here
     // After logout, redirect to home page
     window.location.href = '/'; // Redirect to home page after logout
+  };
+    const handleLogin= () => {
+    // Implement logout logic here
+    // After logout, redirect to home page
+    window.location.href = '/login'; // Redirect to home page after logout
+  };
+    const handleSignUp = () => {
+    // Implement logout logic here
+    // After logout, redirect to home page
+    window.location.href = '/signup'; // Redirect to home page after logout
   };
 
   return (
@@ -51,6 +62,26 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn, userName }) => {
         <button onClick={handleUserIconClick} className="text-gray-800">
           <FontAwesomeIcon icon={faUser} size="lg" />
         </button>
+
+   {!isLoggedIn && isDropdownOpen && (
+          <div className="absolute right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-48">
+                <button
+              onClick={handleSignUp}
+              className="bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-700 w-full text-left"
+            >
+              Sign Up
+            </button>
+            <br />
+          <br />
+            <button
+              onClick={handleLogin}
+              className="bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-700 w-full text-left"
+            >
+              login
+            </button>
+          </div>
+        )}
+
 
         {isLoggedIn && isDropdownOpen && (
           <div className="absolute right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-48">
