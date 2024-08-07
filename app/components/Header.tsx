@@ -15,8 +15,8 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
             <Image 
               src="/Home.png" 
               alt="Logo" 
-              height={80} 
-              width={200} 
+              height={60} 
+              width={120} 
               layout="intrinsic"
             />
        
