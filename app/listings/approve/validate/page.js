@@ -42,7 +42,7 @@ export default function ListingShow() {
 
   const deleteListing = async (listingId) => {
     try {
-      const response = await fetch(`/api/listings/${listingId}`, {
+      const response = await fetch(`/api/listings/approve/${listingId}`, {
         method: 'DELETE',
       });
 
