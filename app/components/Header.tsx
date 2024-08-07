@@ -11,7 +11,10 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
       {/* Left-aligned space for logout or other items */}
       <div className="flex-shrink-0">
         {isLoggedIn ? (
-          <Link href="/" className="text-gray-800 hover:underline">
+
+           
+          
+          <Link href="/" style={{backgroundColor:"#383535"}} className="  text-white py-2 px-4 rounded-lg hover:bg-gray-700">
             Log Out
           </Link>
         ) : null}
