@@ -89,9 +89,9 @@ export default function Listings() {
     <Suspense fallback={<div>Loading...</div>}>
       <div className={styles.container}>
         <Header isLoggedIn={false} />
-        <div style={{ display: "flex", flexDirection: "row", gap: "10px",padding:"10px", justifyContent: "space-between" , backgroundColor:"#cdb588"}}>
+        <div className='newedit'  style={{ display: "flex", flexDirection: "row",  justifyContent: "space-between" , backgroundColor:"#cdb588"}}>
           <Link href="./authenticate">
-            <button style={{ backgroundColor: "white", border: "1px solid black", padding: "10px 20px", color: "#000000", borderRadius: "10px" }}>
+            <button style={{ backgroundColor: "white", border: "1px solid black",padding:"10px", color: "#000000", borderRadius: "10px" }}>
               New
             </button>
           </Link>
@@ -105,7 +105,7 @@ export default function Listings() {
             style={{
               backgroundColor: "white",
               border: "1px solid black",
-              padding: "10px 20px",
+             
               color: "#000000",
               borderRadius: "4px",
               width: "200px",
@@ -116,9 +116,10 @@ export default function Listings() {
             style={{
               backgroundColor: "white",
               border: "1px solid black",
-              padding: "10px 20px",
+    
               color: "#000000",
               borderRadius: "4px",
+          
             }}
           >
             Search
@@ -127,7 +128,7 @@ export default function Listings() {
         
         </div>
           <Link href="./authenticate">
-            <button style={{ backgroundColor: "white", border: "1px solid black", padding: "10px 20px", color: "#000000", borderRadius: "10px" }}>
+            <button style={{ backgroundColor: "white", border: "1px solid black",padding:"10px", color: "#000000", borderRadius: "10px" }}>
               Edit
             </button>
           </Link>
