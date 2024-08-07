@@ -111,14 +111,14 @@ const FilterSidebar = ({ onFilterChange }) => {
         <input
           type="number"
           name="min"
-          style={{color:"#000"}}
+          style={{color:"#000", width:"80px"}}
           value={filters.priceRange[0]}
           onChange={(e) => handleRangeChange(e, 'priceRange')}
         />
         <input
           type="number"
           name="max"
-          style={{color:"#000"}}
+          style={{color:"#000",width:"80px"}}
           value={filters.priceRange[1]}
           onChange={(e) => handleRangeChange(e, 'priceRange')}
         />
@@ -129,14 +129,14 @@ const FilterSidebar = ({ onFilterChange }) => {
         <input
           type="number"
           name="min"
-          style={{color:"#000"}}
+          style={{color:"#000",width:"80px"}}
           value={filters.areaRange[0]}
           onChange={(e) => handleRangeChange(e, 'areaRange')}
         />
         <input
           type="number"
           name="max"
-          style={{color:"#000"}}
+          style={{color:"#000",width:"80px"}}
           value={filters.areaRange[1]}
           onChange={(e) => handleRangeChange(e, 'areaRange')}
         />
