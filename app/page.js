@@ -4,8 +4,12 @@ import { useSearchParams } from 'next/navigation';
 import styles from './styles/listings.module.css';
 import Link from 'next/link';
 import Header from './components/Header';
+
 import Footer from './components/Footer';
 import FilterSidebar from './components/FilterSidebar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
+
 
 export default function Listings() {
   const searchParams = useSearchParams();
@@ -133,9 +137,11 @@ export default function Listings() {
             </button>
           </Link>
         </div>
+   
   <button className={styles.sidebarToggle} onClick={toggleSidebar}>
-            {sidebarVisible ? 'Hide Filters' : 'Show Filters'}
+       <FontAwesomeIcon icon={faFilter} />
           </button>
+          
        
 
         <div>

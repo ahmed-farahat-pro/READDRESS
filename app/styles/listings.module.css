@@ -26,9 +26,9 @@
 
     .sidebarToggle {
         position: fixed;
-        background-color: #fff;
-        color: black;
-        width: 100px;
+        background-color: #383535;
+        color: #fff;
+        width: 60px;
         height:50px;
         border-radius: 10px;
     }
