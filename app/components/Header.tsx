@@ -7,30 +7,30 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
   return (
-    <header className="flex items-center justify-between p-4 bg-white text-gray-800 shadow-md">
-      {/* Left-aligned space for logout or other items */}
-      <div className="flex-shrink-0">
-        {isLoggedIn ? (
-
-           
-          
-          <Link href="/" style={{backgroundColor:"#383535"}} className="  text-white py-2 px-4 rounded-lg hover:bg-gray-700">
-            Log Out
-          </Link>
-        ) : null}
-      </div>
-
-      {/* Centered logo */}
-      <div className="flex-grow flex justify-center">
-        <Link href="/" className="text-gray-800 hover:underline">
-          <Image src="/Home.png" alt="Logo" height={50} width={125} /> {/* Adjusted dimensions */}
+    <header className="flex items-center p-4 bg-white text-gray-800 shadow-md">
+      {/* Logo container */}
+      <div className={`flex-grow ${isLoggedIn ? 'flex justify-start' : 'flex justify-center'}`}>
+        <Link href="/">
+     
+            <Image 
+              src="/Home.png" 
+              alt="Logo" 
+              height={80} 
+              width={200} 
+              layout="intrinsic"
+            />
+       
         </Link>
       </div>
 
-      {/* Right-aligned space for additional items if needed */}
-      <div className="flex-shrink-0">
-        {/* Add other items here if needed */}
-      </div>
+      {/* Conditional rendering of the "Log Out" link */}
+      {isLoggedIn && (
+        <div className="flex-shrink-0 ml-auto">
+          <Link href="/" className="bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-700">
+            Log Out
+          </Link>
+        </div>
+      )}
     </header>
   );
 };
