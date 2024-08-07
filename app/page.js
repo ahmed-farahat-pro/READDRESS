@@ -135,7 +135,7 @@ export default function Listings() {
           </button>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "row" }}>
+        <div>
           {/* Sidebar */}
           <div className={`${styles.xyz} ${sidebarVisible ? styles['xyz-show'] : styles['xyz-hidden']}`}>
             <FilterSidebar onFilterChange={handleFilterChange} />

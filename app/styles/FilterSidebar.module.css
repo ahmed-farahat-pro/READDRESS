@@ -4,13 +4,19 @@
     width: 250px;
     background-color: #000;
     padding: 20px;
-
-    /* Make sure it's fixed to the screen */
+    position: fixed;
+    /* Fixed position */
     top: 120px;
     left: 0;
-    height: 80%;
-
+    height: 80vh;
+    /* Use viewport height units */
+    overflow-y: auto;
+    /* Enable vertical scrolling */
+    overflow-x: hidden;
+    /* Disable horizontal scrolling if not needed */
     /* Smooth transition */
+    transition: all 0.7s ease;
+    /* Optional: add transition for smooth effects */
 }
 
 /* Default hidden style (to be overridden by media query) */

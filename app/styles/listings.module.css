@@ -20,12 +20,7 @@
     display: none;
 }
 
-/* Show the toggle button on small screens */
-@media (max-width: 768px) {
-    .sidebarToggle {
-        display: block;
-    }
-}
+
 .listing {
     background-color: #fff;
     display: flex;
