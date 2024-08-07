@@ -6,9 +6,12 @@
     padding: 20px;
     position: fixed;
     /* Fixed position */
-    top: 40%;
-    left: 0;
-    height: 80vh;
+    top: 25%;
+    left: 35%;
+ 
+    width: 50%;
+    height: 50%;
+    height: 50vh;
     /* Use viewport height units */
     overflow-y: auto;
     /* Enable vertical scrolling */
@@ -17,6 +20,7 @@
     /* Smooth transition */
     transition: all 0.7s ease;
     /* Optional: add transition for smooth effects */
+    border-radius: 20px;
 }
 
 /* Default hidden style (to be overridden by media query) */
