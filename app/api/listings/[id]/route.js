@@ -57,6 +57,7 @@ export const PATCH = async (request, { params }) => {
        const emailHtml = `
 
        <h1> User  ${oldListing.user_id.email}</h1>
+           <h1> User  ${oldListing.user_id.phone_number}</h1>
     <h1>Old Listing </h1>
     <p><strong>Title:</strong> ${oldListing.title}</p>
     <p><strong>Price:</strong> ${oldListing.price}</p>

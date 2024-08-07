@@ -2,6 +2,7 @@
 import connectToDatabase from '../../../lib/mongodb';
 import Listing from '../../../schemas/listing';
 import { NextResponse } from 'next/server';
+import user from '../../../schemas/user';
 
 export const POST = async (request) => {
   try {
@@ -93,8 +94,14 @@ export const POST = async (request) => {
     Status: ${newListing.status}
     Images: ${newListing.images.join(', ')}
   `;
+ 
+
+
+    await newListing.save();
+    const x = await user.findById(user_id);
    const emailHtml = `
     <h1>New Listing Created</h1>
+               <h1> User  ${x.phone_number}</h1>
     <p><strong>Title:</strong> ${newListing.title}</p>
     <p><strong>Price:</strong> ${newListing.price}</p>
     <p><strong>City:</strong> ${newListing.city}</p>
@@ -109,11 +116,9 @@ export const POST = async (request) => {
     <p><strong>Status:</strong> ${newListing.status}</p>
     <p><strong>Images:</strong> ${newListing.images.join(', ')}</p>
   `;
-
-    await newListing.save();
     let mailOptions = {
   from: 'ahmedfarahat430@gmail.com', // Sender address
-  to: 'ahmedfarahat400@gmail.com', // List of recipients
+  to: 'ahmedfarahat430@gmail.com', // List of recipients
   subject: 'Listing Created and need Approvval ', // Subject line
   text: emailText, // Plain text body
   html: emailHtml // HTML body
