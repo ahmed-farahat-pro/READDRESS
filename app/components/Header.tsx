@@ -7,7 +7,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
   return (
-    <header className="flex items-center p-4 bg-white text-gray-800 shadow-md">
+    <header style={{backgroundColor:"#fff"}} className="flex items-center p-4 bg-white text-gray-800 shadow-md">
       {/* Logo container */}
       <div className={`flex-grow ${isLoggedIn ? 'flex justify-start' : 'flex justify-center'}`}>
         <Link href="/">
@@ -18,6 +18,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
               height={60} 
               width={120} 
               layout="intrinsic"
+              style={{borderRadius:"10px"}}
             />
        
         </Link>
