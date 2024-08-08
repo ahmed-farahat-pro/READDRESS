@@ -11,17 +11,15 @@ export default function LanguageChanger() {
   const router = useRouter();
   const currentPathname = usePathname();
 
-  const handleChange = e => {
-    const newLocale = e.target.value;
-
-    // set cookie for next-i18n-router
+  const handleLanguageChange = (newLocale: string) => {
+    // Set cookie for next-i18n-router
     const days = 30;
     const date = new Date();
     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
     const expires = date.toUTCString();
     document.cookie = `NEXT_LOCALE=${newLocale};expires=${expires};path=/`;
 
-    // redirect to the new locale path
+    // Redirect to the new locale path
     if (
       currentLocale === i18nConfig.defaultLocale &&
       !i18nConfig.prefixDefault
@@ -37,10 +35,23 @@ export default function LanguageChanger() {
   };
 
   return (
-    <select onChange={handleChange} value={currentLocale}>
-      <option value="en">English</option>
-      <option value="ar">arabic</option>
-      
-    </select>
+    <div className="language-changer flex items-center space-x-4">
+      {currentLocale !== 'en' && (
+        <button
+          onClick={() => handleLanguageChange('en')}
+          className={`px-4 py-2 rounded ${currentLocale === 'en' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'}`}
+        >
+          English
+        </button>
+      )}
+      {currentLocale !== 'ar' && (
+        <button
+          onClick={() => handleLanguageChange('ar')}
+          className={`px-4 py-2 rounded ${currentLocale === 'ar' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'}`}
+        >
+          العربية
+        </button>
+      )}
+    </div>
   );
 }

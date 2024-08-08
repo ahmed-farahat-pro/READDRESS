@@ -67,7 +67,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn, userName }) => {
 
         {/* Dropdown Menu */}
         {isDropdownOpen && (
-          <div className="absolute right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-48">
+          <div className="absolute right-10 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-48">
             {!isLoggedIn ? (
               <>
                 <button
@@ -80,7 +80,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn, userName }) => {
                   onClick={handleLogin}
                   className="bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-700 w-full text-left"
                 >
-                  {t("Log In")}
+                  {t("Log In ")}
                 </button>
               </>
             ) : (
