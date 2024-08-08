@@ -149,7 +149,10 @@ export default function Listings() {
           <div className={`${styles.xyz} ${sidebarVisible ? styles['xyz-show'] : styles['xyz-hidden']}`}>
             <FilterSidebar onFilterChange={handleFilterChange} />
           </div>
-
+             <div className={styles.actionButtons}>
+    <button className={styles.actionButton}>Buy</button>
+    <button className={styles.actionButton}>Sell</button>
+  </div>
           {error && <p className={styles.error}>{error}</p>}
           {!loading ? (
             <div className={styles.listings}>
@@ -172,7 +175,9 @@ export default function Listings() {
                   </div>
                 </Link>
               ))}
+             
             </div>
+           
           ) : (
             <div className={styles.loading}>
               <p>Loading...</p>
