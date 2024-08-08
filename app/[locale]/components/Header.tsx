@@ -68,6 +68,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn, userName }) => {
         <button onClick={handleUserIconClick} className="text-gray-800">
           <FontAwesomeIcon icon={faUser} size="lg" />
         </button>
+        <h1>rrrrr</h1>
         <LanguageChanger/>
 
    {!isLoggedIn && isDropdownOpen && (
