@@ -14,6 +14,7 @@ export default function Listings() {
   const searchParams = useSearchParams();
   const userId = searchParams.get('userId');
   const [listings, setListings] = useState([]);
+  const name = searchParams.get('name');
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 

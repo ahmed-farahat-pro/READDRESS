@@ -34,6 +34,7 @@ export default function AddListing() {
   ];
 
   const searchParams = useSearchParams();
+  const name = searchParams.get('name');
   const [googleMapsUrl, setGoogleMapsUrl] = useState('');
   const [formData, setFormData] = useState({
     user_id: searchParams.get('userId'),  // Replace with actual user ID or handle user authentication
@@ -149,7 +150,7 @@ export default function AddListing() {
 
   return (
     <div>
-       <Header isLoggedIn={true} />
+       <Header isLoggedIn={true}  userName={name}/>
       <div className={styles.container}>
         <h1>Add New Listing</h1>
         <form onSubmit={handleSubmit} className={styles.form}>

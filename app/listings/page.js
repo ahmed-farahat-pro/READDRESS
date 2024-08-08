@@ -77,12 +77,14 @@ export default function Listings() {
          <Header isLoggedIn={true}  userName={name}/>
 
 <div style={{ display: "flex", flexDirection: "row", gap: "10px" , justifyContent:"space-between" }}>
-      <Link href={`/listings/new?userId=${userId}`}>
+      <Link href={`/listings/new?userId=${encodeURIComponent(userId)}&name=${encodeURIComponent(name)}`}>
+
+           
     <button style={{ backgroundColor: "white", border: "1px solid black", padding: "10px 20px" ,color:"#000000",borderRadius:"10px"}}>
       New
     </button>
   </Link>
-     <Link href={`/listings/edit?userId=${userId}`}>
+       <Link href={`/listings/edit?userId=${encodeURIComponent(userId)}&name=${encodeURIComponent(name)}`}>
     <button style={{ backgroundColor: "white", border: "1px solid black", padding: "10px 20px" , color:"#000000",borderRadius:"10px"}}>
       Edit
     </button>
