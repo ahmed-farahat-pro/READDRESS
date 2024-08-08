@@ -47,8 +47,10 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn, userName }) => {
   return (
     <header style={{ backgroundColor: "#fff" }} className="flex items-center p-4 bg-white text-gray-800 shadow-md">
       {/* Logo container */}
+  
 
       <div className={`flex-grow ${isLoggedIn ? 'flex justify-start' : 'flex justify-center'}`}>
+      
         <Link href="/">
        
             <Image

@@ -16,6 +16,7 @@ export function generateStaticParams() {
 
 export default function RootLayout({ children, params: { locale } }) {
   return (
+    
     <html lang={locale} dir={dir(locale)}>
       <body className={inter.className}>{children}</body>
     </html>

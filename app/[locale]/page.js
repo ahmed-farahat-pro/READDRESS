@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import styles from './styles/listings.module.css';
@@ -9,6 +10,7 @@ import FilterSidebar from './components/FilterSidebar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import TranslationsProvider from './components/TranslationsProvider';
+import { useTranslation } from 'react-i18next';
 import initTranslations from '../i18n'; // Ensure this path is correct
 
 const i18nNamespaces = ['home'];
@@ -16,7 +18,8 @@ const i18nNamespaces = ['home'];
 export default function Listings({ params: { locale } }) {
   const searchParams = useSearchParams();
   const userId = searchParams.get('userId');
-  const [t, setT] = useState(null);
+  
+  const [t, setT] = useState(() => (key) => key); // Default to identity function
   const [resources, setResources] = useState(null);
   const [listings, setListings] = useState([]);
   const [filteredListings, setFilteredListings] = useState([]);
@@ -39,7 +42,7 @@ export default function Listings({ params: { locale } }) {
       const matchesArea = listing.area >= areaRange[0] && listing.area <= areaRange[1];
       const matchesBedrooms = bedrooms.length === 0 || bedrooms.includes(listing.bedrooms);
       const matchesBathrooms = bathrooms.length === 0 || bathrooms.includes(listing.bathrooms);
-      const matchesRentalType = rentalType.length === 0 || rentalType.includes(listing.buy);
+      const matchesRentalType = rentalType.length === 0 || rentalType.includes(listing.rental_type);
       return matchesPropertyType && matchesPrice && matchesArea && matchesBedrooms && matchesBathrooms && matchesRentalType;
     });
     setFilteredListings(filtered);
@@ -47,7 +50,7 @@ export default function Listings({ params: { locale } }) {
 
   useEffect(() => {
     applyFilters();
-  }, [filters]);
+  }, [filters, listings]);
 
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters);
@@ -57,7 +60,7 @@ export default function Listings({ params: { locale } }) {
     const fetchTranslations = async () => {
       try {
         const { t, resources } = await initTranslations(locale, i18nNamespaces);
-        setT(t);
+        setT(() => t); // Ensure t is set as a function
         setResources(resources);
         setTranslationsReady(true);
       } catch (error) {
@@ -112,16 +115,17 @@ export default function Listings({ params: { locale } }) {
   return (
     <div className={styles.container}>
       {translationsReady ? (
-       <TranslationsProvider
-      namespaces={i18nNamespaces}
-      locale={locale}
-      resources={resources}>
+        <TranslationsProvider
+          namespaces={i18nNamespaces}
+          locale={locale}
+          resources={resources}
+        >
           <Suspense fallback={<div>Loading...</div>}>
             <Header isLoggedIn={false} />
             <div className='newedit' style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", backgroundColor: "#cdb588" }}>
               <Link href="./authenticate">
                 <button style={{ backgroundColor: "white", border: "1px solid black", padding: "10px", color: "#000000", borderRadius: "10px" }}>
-                  New
+                  {t("buy")}
                 </button>
               </Link>
               <div style={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#cdb588" }}>
@@ -129,7 +133,7 @@ export default function Listings({ params: { locale } }) {
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Search by title"
+                  placeholder={t("search")}
                   style={{
                     backgroundColor: "white",
                     border: "1px solid black",
@@ -147,12 +151,12 @@ export default function Listings({ params: { locale } }) {
                     borderRadius: "4px",
                   }}
                 >
-                  Search
+                  {t('search')}
                 </button>
               </div>
               <Link href="./authenticate">
                 <button style={{ backgroundColor: "white", border: "1px solid black", padding: "10px", color: "#000000", borderRadius: "10px" }}>
-                  Edit
+                  {t("edit")}
                 </button>
               </Link>
             </div>
@@ -164,8 +168,12 @@ export default function Listings({ params: { locale } }) {
                 <FilterSidebar onFilterChange={handleFilterChange} />
               </div>
               <div className={styles.actionButtons}>
-                <button className={styles.actionButton}><Link href="/choose">Buy</Link></button>
-                <button className={styles.actionButton}><Link href="/choose">Sell</Link></button>
+                <button className={styles.actionButton}>
+                  <Link href="/choose"> {t('buy')}</Link>
+                </button>
+                <button className={styles.actionButton}>
+                  <Link href="/choose"> {t('sell')}</Link>
+                </button>
               </div>
               {error && <p className={styles.error}>{error}</p>}
               {!loading ? (
@@ -185,14 +193,14 @@ export default function Listings({ params: { locale } }) {
                           />
                         )}
                         <h2>{listing.title}</h2>
-                        <p className={styles.price}>{listing.price} EGP</p>
+                        <p className={styles.price}>{listing.price} {t("EGP")}</p>
                       </div>
                     </Link>
                   ))}
                 </div>
               ) : (
                 <div className={styles.loading}>
-                  <p>Loading...</p>
+                  <p>loading</p>
                 </div>
               )}
             </div>
@@ -200,8 +208,7 @@ export default function Listings({ params: { locale } }) {
           </Suspense>
         </TranslationsProvider>
       ) : (
-        <div>Loading translations...</div>
-
+        <div>loadingTranslations</div>
       )}
     </div>
   );
