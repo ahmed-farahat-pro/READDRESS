@@ -174,7 +174,7 @@ export default function Listings({ params: { locale } }) {
         </Link>
       </button>
       <button className={styles.actionButton}>
-        <Link href="/choose?type=sale">
+        <Link href="/choose?type=sell">
           {t('sell')}
         </Link>
       </button>
