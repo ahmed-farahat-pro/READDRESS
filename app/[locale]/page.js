@@ -167,14 +167,18 @@ export default function Listings({ params: { locale } }) {
               <div className={`${styles.xyz} ${sidebarVisible ? styles['xyz-show'] : styles['xyz-hidden']}`}>
                 <FilterSidebar onFilterChange={handleFilterChange} />
               </div>
-              <div className={styles.actionButtons}>
-                <button className={styles.actionButton}>
-                  <Link href="/choose"> {t('buy')}</Link>
-                </button>
-                <button className={styles.actionButton}>
-                  <Link href="/choose"> {t('sell')}</Link>
-                </button>
-              </div>
+            <div className={styles.actionButtons}>
+      <button className={styles.actionButton}>
+        <Link href="/choose?type=buy">
+          {t('buy')}
+        </Link>
+      </button>
+      <button className={styles.actionButton}>
+        <Link href="/choose?type=sale">
+          {t('sell')}
+        </Link>
+      </button>
+    </div>
               {error && <p className={styles.error}>{error}</p>}
               {!loading ? (
                 <div className={styles.listings}>
