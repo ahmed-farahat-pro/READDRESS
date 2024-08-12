@@ -122,12 +122,8 @@ export default function Listings({ params: { locale } }) {
         >
           <Suspense fallback={<div>Loading...</div>}>
             <Header isLoggedIn={false} />
-            <div className='newedit' style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", backgroundColor: "#cdb588" }}>
-              <Link href="./authenticate">
-                <button style={{ backgroundColor: "white", border: "1px solid black", padding: "10px", color: "#000000", borderRadius: "10px" }}>
-                  {t("buy")}
-                </button>
-              </Link>
+            <div className='newedit' style={{ display: "flex", flexDirection: "row", justifyContent: "center", backgroundColor: "#cdb588" }}>
+            
               <div style={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#cdb588" }}>
                 <input
                   type="text"
@@ -154,11 +150,7 @@ export default function Listings({ params: { locale } }) {
                   {t('search')}
                 </button>
               </div>
-              <Link href="./authenticate">
-                <button style={{ backgroundColor: "white", border: "1px solid black", padding: "10px", color: "#000000", borderRadius: "10px" }}>
-                  {t("edit")}
-                </button>
-              </Link>
+         
             </div>
             <button className={styles.sidebarToggle} onClick={toggleSidebar}>
               <FontAwesomeIcon icon={faFilter} />
