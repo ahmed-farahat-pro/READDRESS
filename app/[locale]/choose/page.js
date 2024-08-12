@@ -69,7 +69,8 @@ if (user.user !=null){
             
             
             </div>}
-      <Header isLoggedIn={logged}/>
+            {user.user !=null &&     <Header isLoggedIn={logged} userName={user.user.first_name}/>}
+   {user.user ==null &&     <Header isLoggedIn={logged} />}
       <div>
         <h1 style={{ color: "#000" }}>
           {type === 'buy' ? 'Buying' : type === 'sell' ? 'Selling' : 'Select an Action'}
