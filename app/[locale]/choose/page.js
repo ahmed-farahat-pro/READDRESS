@@ -9,6 +9,10 @@ import { useSearchParams } from 'next/navigation';
 import LogIn from "../components/login"
 import { useUser } from '../../UserContext';
 import { useState } from 'react';
+import TranslationsProvider from '../components/TranslationsProvider';
+import { useTranslation } from 'react-i18next';
+import initTranslations from '../../i18n';
+const i18nNamespaces = ['home'];
 
 const propertyTypes = [
   'Apartment', 'House', 'Condo', 'Villa', 'Townhouse', 'Studio', 'Penthouse', 'Duplex',
@@ -16,13 +20,32 @@ const propertyTypes = [
   'Commercial', 'Office Space', 'Retail Space', 'Warehouse', 'Industrial'
 ];
 
-const PropertyTypesPage = () => {
+const PropertyTypesPage = ({ params: { locale } }) => {
+      const [t, setT] = useState(() => (key) => key); // Default to identity function
+  const [resources, setResources] = useState(null);
+    const [translationsReady, setTranslationsReady] = useState(false);
+      useEffect(() => {
+    const fetchTranslations = async () => {
+      try {
+        const { t, resources } = await initTranslations(locale, i18nNamespaces);
+        setT(() => t); // Ensure t is set as a function
+        setResources(resources);
+        setTranslationsReady(true);
+      } catch (error) {
+        console.error("Failed to fetch translations:", error);
+      }
+    };
+
+    fetchTranslations();
+  }, [locale]);
+
 const user = useUser();
 const [logged,setLogged] = useState(false);
     useEffect(() => {
   
-if (user !=null){
+if (user.user !=null){
     setLogged(true);
+    console.log(user);
 }
 
   }, [user]);
@@ -32,6 +55,12 @@ if (user !=null){
 
   return (
     <div className={styles.container}>
+         {translationsReady ? (
+        <TranslationsProvider
+          namespaces={i18nNamespaces}
+          locale={locale}
+          resources={resources}
+        >
           {type==="sell" &&  logged==false&&
         <div className='divlogitin'>
             
@@ -40,7 +69,7 @@ if (user !=null){
             
             
             </div>}
-      <Header isLoggedIn={logged} />
+      <Header isLoggedIn={logged}/>
       <div>
         <h1 style={{ color: "#000" }}>
           {type === 'buy' ? 'Buying' : type === 'sell' ? 'Selling' : 'Select an Action'}
@@ -72,18 +101,12 @@ if (user !=null){
             ))}
           </div>
         )}
-        {!type && (
-          <div className={styles.buttonContainer}>
-            <Link href="?type=buy">
-              <button className={styles.button}>Start Buying</button>
-            </Link>
-            <Link href="?type=sell">
-              <button className={styles.button}>Start Selling</button>
-            </Link>
-          </div>
-        )}
+      
       </div>
-
+</TranslationsProvider>
+      ) : (
+        <div>loadingTranslations</div>
+      )}
     </div>
   );
 };

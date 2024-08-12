@@ -6,14 +6,22 @@ import styles from '../../styles/Form.module.css';
 import GoogleMaps from '../../components/GoogleMaps';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
-
-export default function AddListing() {
+import TranslationsProvider from '../../components/TranslationsProvider';
+import { useTranslation } from 'react-i18next';
+import initTranslations from '../../../i18n'; // Ensure this path is correct
+import { useUser } from '../../../UserContext';
+import { useEffect } from 'react';
+const i18nNamespaces = ['home'];
+export default function AddListing({ params: { locale } }) {
     const buyitorrent = ['buy' , 'rent'];
 
 
   const searchParams = useSearchParams();
   const name = searchParams.get('name');
+   const [t, setT] = useState(() => (key) => key); // Default to identity function
+  const [resources, setResources] = useState(null);
     const type = searchParams.get('type');
+      const [translationsReady, setTranslationsReady] = useState(false);
   const [googleMapsUrl, setGoogleMapsUrl] = useState('');
   const [formData, setFormData] = useState({
     user_id: searchParams.get('userId'),  // Replace with actual user ID or handle user authentication
@@ -37,6 +45,20 @@ export default function AddListing() {
   const [files, setFiles] = useState([]);
   const [previews, setPreviews] = useState([]);
 
+  useEffect(() => {
+    const fetchTranslations = async () => {
+      try {
+        const { t, resources } = await initTranslations(locale, i18nNamespaces);
+        setT(() => t); // Ensure t is set as a function
+        setResources(resources);
+        setTranslationsReady(true);
+      } catch (error) {
+        console.error("Failed to fetch translations:", error);
+      }
+    };
+
+    fetchTranslations();
+  }, [locale]);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -128,7 +150,14 @@ export default function AddListing() {
   };
 
   return (
+ 
     <div>
+          { translationsReady ? (
+        <TranslationsProvider
+          namespaces={i18nNamespaces}
+          locale={locale}
+          resources={resources}
+        >
        <Header isLoggedIn={true}  userName={name}/>
       <div className={styles.container}>
         <h1>Add New Listing</h1>
@@ -300,6 +329,11 @@ export default function AddListing() {
         </form>
       </div>
       <Footer />
+       </TranslationsProvider>
+      ) : (
+        <div>loadingTranslations</div>
+      )}
     </div>
-  );
+   
+    );
 }
