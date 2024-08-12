@@ -12,13 +12,14 @@ import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import TranslationsProvider from './components/TranslationsProvider';
 import { useTranslation } from 'react-i18next';
 import initTranslations from '../i18n'; // Ensure this path is correct
+import { useUser } from '../UserContext';
 
 const i18nNamespaces = ['home'];
 
 export default function Listings({ params: { locale } }) {
   const searchParams = useSearchParams();
   const userId = searchParams.get('userId');
-  
+   const { user } = useUser(); // Get user from context
   const [t, setT] = useState(() => (key) => key); // Default to identity function
   const [resources, setResources] = useState(null);
   const [listings, setListings] = useState([]);
@@ -33,6 +34,10 @@ export default function Listings({ params: { locale } }) {
   const toggleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
   };
+
+    useEffect(() => {
+    console.log('User:', user);
+  }, [user]);
 
   const applyFilters = () => {
     const { propertyType = [], priceRange = [0, 1000000], areaRange = [0, 10000], bedrooms = [], bathrooms = [], rentalType = [] } = filters;

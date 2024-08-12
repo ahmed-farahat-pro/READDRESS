@@ -7,6 +7,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import LanguageChanger from './LanguageChanger';
+import { useRouter } from 'next/navigation'; // Import useRouter
 
 interface HeaderProps {
   isLoggedIn: boolean;
@@ -16,6 +17,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ isLoggedIn, userName }) => {
   const { t } = useTranslation();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const router = useRouter(); // Get router instance
 
   const handleUserIconClick = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -23,17 +25,20 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn, userName }) => {
 
   const handleLogout = () => {
     // Implement logout logic here
-    window.location.href = '/'; // Redirect to home page after logout
+    // For example, clear authentication tokens, etc.
+
+    // Redirect to home page after logout
+    router.push('/'); // Use router.push for navigation
   };
 
   const handleLogin = () => {
     // Redirect to login page
-    window.location.href = '/login';
+    router.push('/login'); // Use router.push for navigation
   };
 
   const handleSignUp = () => {
     // Redirect to sign-up page
-    window.location.href = '/signup';
+    router.push('/signup'); // Use router.push for navigation
   };
 
   return (
@@ -46,16 +51,14 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn, userName }) => {
       {/* Center: Logo */}
       <div style={{ flex: '0 0 20%' }} className="flex items-center justify-center">
         <Link href="/">
- 
-            <Image
-              src="/Home.png"
-              alt="Logo"
-              height={60}
-              width={120}
-              layout="intrinsic"
-              style={{ borderRadius: "10px" }}
-            />
-   
+          <Image
+            src="/Home.png"
+            alt="Logo"
+            height={60}
+            width={120}
+            layout="intrinsic"
+            style={{ borderRadius: "10px" }}
+          />
         </Link>
       </div>
 
