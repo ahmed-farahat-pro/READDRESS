@@ -6,9 +6,9 @@
 :root {
     --foreground-color: #fff;
     /* white gray text color */
-    --background-start-color: #000;
+    --background-start-color: rgb(205, 181, 136);
     /* Light gray background start */
-    --background-end-color: #000;
+    --background-end-color: rgb(205, 181, 136)
     /* White background end */
 }
 

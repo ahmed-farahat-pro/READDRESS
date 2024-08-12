@@ -60,7 +60,7 @@ const PropertyTypesPage = () => {
           </div>
         )}
       </div>
-      <Footer />
+
     </div>
   );
 };

@@ -1,71 +1,200 @@
-"use client"; // Ensure you use "use client" if you are using the Next.js App Router
+"use client";
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
+import styles from '../../styles/listings.module.css';
+import Link from 'next/link';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import styles from '../../styles/Category.module.css'; // Import CSS module for styling
-import { useSearchParams } from 'next/navigation';
+import FilterSidebar from '../../components/FilterSidebar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import TranslationsProvider from '../../components/TranslationsProvider';
+import { useTranslation } from 'react-i18next';
+import initTranslations from '../../../i18n'; // Ensure this path is correct
 
-const CategoryPage = () => {
-  const [listings, setListings] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const i18nNamespaces = ['home'];
+
+export default function categoryPage({ params: { locale } }) {
   const searchParams = useSearchParams();
   const type = searchParams.get('type');
+  
+  const [t, setT] = useState(() => (key) => key); // Default to identity function
+  const [resources, setResources] = useState(null);
+  const [listings, setListings] = useState([]);
+  const [filteredListings, setFilteredListings] = useState([]);
+  const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [filters, setFilters] = useState({});
+  const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [translationsReady, setTranslationsReady] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarVisible(!sidebarVisible);
+  };
+
+  const applyFilters = () => {
+    const { propertyType = [], priceRange = [0, 1000000], areaRange = [0, 10000], bedrooms = [], bathrooms = [], rentalType = [] } = filters;
+    const filtered = listings.filter(listing => {
+      const matchesPropertyType = propertyType.length === 0 || propertyType.includes(listing.property_type);
+      const matchesPrice = listing.price >= priceRange[0] && listing.price <= priceRange[1];
+      const matchesArea = listing.area >= areaRange[0] && listing.area <= areaRange[1];
+      const matchesBedrooms = bedrooms.length === 0 || bedrooms.includes(listing.bedrooms);
+      const matchesBathrooms = bathrooms.length === 0 || bathrooms.includes(listing.bathrooms);
+      const matchesRentalType = rentalType.length === 0 || rentalType.includes(listing.rental_type);
+      return matchesPropertyType && matchesPrice && matchesArea && matchesBedrooms && matchesBathrooms && matchesRentalType;
+    });
+    setFilteredListings(filtered);
+  };
 
   useEffect(() => {
-    if (type) {
-      // Construct the URL for the API request
-      const apiUrl = `/api/choose/${type}`;
-      
-      // Fetch data from the API
-      const fetchData = async () => {
-        try {
-          const response = await fetch(apiUrl);
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          const data = await response.json();
-          setListings(data);
-          console.log(listings);
-        } catch (error) {
-          setError(error.message);
-        } finally {
-          setLoading(false);
-        }
-      };
+    applyFilters();
+  }, [filters, listings]);
 
-      fetchData();
+  const handleFilterChange = (newFilters) => {
+    setFilters(newFilters);
+  };
+
+  useEffect(() => {
+    const fetchTranslations = async () => {
+      try {
+        const { t, resources } = await initTranslations(locale, i18nNamespaces);
+        setT(() => t); // Ensure t is set as a function
+        setResources(resources);
+        setTranslationsReady(true);
+      } catch (error) {
+        console.error("Failed to fetch translations:", error);
+      }
+    };
+
+    fetchTranslations();
+  }, [locale]);
+
+  useEffect(() => {
+    const fetchListings = async () => {
+      try {
+        const response = await fetch('/api/listings');
+        const data = await response.json();
+
+        if (response.ok) {
+          const approvedListings = data.listings.filter(listing => listing.status === 'approved' && listing.property_type===type);
+          setListings(approvedListings);
+          setFilteredListings(approvedListings);
+          setLoading(false);
+        } else {
+          setError(data.error);
+        }
+      } catch (error) {
+        setError('Failed to fetch listings');
+      }
+    };
+
+    fetchListings();
+  }, []);
+
+  const handleSearch = async () => {
+    if (!searchTerm) return;
+
+    try {
+      const response = await fetch(`/api/listings/search/${searchTerm}`);
+      const data = await response.json();
+
+      if (response.ok) {
+        const approvedListings = data.listings.filter(listing => listing.status === 'approved');
+        setListings(approvedListings);
+        setFilteredListings(approvedListings);
+      } else {
+        setError(data.error);
+      }
+    } catch (error) {
+      setError('Failed to fetch listings');
     }
-  }, [type]);
+  };
 
   return (
     <div className={styles.container}>
-      <Header isLoggedIn={false} />
-      <div className={styles.content}>
-        <h1>You chose the following property type:</h1>
-        <p className={styles.selectedType}>{type}</p>
-        {loading && <p>Loading...</p>}
-        {error && <p className={styles.error}>Error: {error}</p>}
-        {!loading && !error && (
-          <ul className={styles.listings}>
-            {listings.length > 0 ? (
-              listings.map((listing) => (
-                <li key={listing.id} className={styles.listingItem}>
-                  {/* Render listing details here */}
-                  <h2>{listing.title}</h2>
-                  <p>{listing.description}</p>
-                </li>
-              ))
-            ) : (
-              <p>No listings found.</p>
-            )}
-          </ul>
-        )}
-      </div>
-      <Footer />
+      {translationsReady ? (
+        <TranslationsProvider
+          namespaces={i18nNamespaces}
+          locale={locale}
+          resources={resources}
+        >
+          <Suspense fallback={<div>Loading...</div>}>
+            <Header isLoggedIn={false} />
+            <div className='newedit' style={{ display: "flex", flexDirection: "row", justifyContent: "center", backgroundColor: "#cdb588" }}>
+            
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#cdb588" }}>
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder={t("search")}
+                  style={{
+                    backgroundColor: "white",
+                    border: "1px solid black",
+                    color: "#000000",
+                    borderRadius: "4px",
+                    width: "200px",
+                  }}
+                />
+                <button
+                  onClick={handleSearch}
+                  style={{
+                    backgroundColor: "white",
+                    border: "1px solid black",
+                    color: "#000000",
+                    borderRadius: "4px",
+                  }}
+                >
+                  {t('search')}
+                </button>
+              </div>
+         
+            </div>
+            <button className={styles.sidebarToggle} onClick={toggleSidebar}>
+              <FontAwesomeIcon icon={faFilter} />
+            </button>
+            <div>
+              <div className={`${styles.xyz} ${sidebarVisible ? styles['xyz-show'] : styles['xyz-hidden']}`}>
+                <FilterSidebar onFilterChange={handleFilterChange} />
+              </div>
+      
+              {error && <p className={styles.error}>{error}</p>}
+              {!loading ? (
+                <div className={styles.listings}>
+                  {filteredListings.map((listing) => (
+                    <Link
+                      key={listing._id}
+                      href={`/listings/show?data=${encodeURIComponent(JSON.stringify(listing))}`}
+                      className={styles.cardLink}
+                    >
+                      <div className={styles.listing}>
+                        {listing.images.length > 0 && (
+                          <img
+                            src={listing.images[0].image_url}
+                            alt="Listing Image"
+                            className={styles['image-container']}
+                          />
+                        )}
+                        <h2>{listing.title}</h2>
+                        <p className={styles.price}>{listing.price} {t("EGP")}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <div className={styles.loading}>
+                  <p>loading</p>
+                </div>
+              )}
+            </div>
+            
+          </Suspense>
+        </TranslationsProvider>
+      ) : (
+        <div>loadingTranslations</div>
+      )}
     </div>
   );
-};
-
-export default CategoryPage;
+}
