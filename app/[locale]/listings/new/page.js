@@ -9,32 +9,11 @@ import Header from '../../components/Header';
 
 export default function AddListing() {
     const buyitorrent = ['buy' , 'rent'];
-     const propertyTypes = [
-    'Apartment',
-    'House',
-    'Condo',
-    'Villa',
-    'Townhouse',
-    'Studio',
-    'Penthouse',
-    'Duplex',
-    'Triplex',
-    'Loft',
-    'Flat',
-    'Bungalow',
-    'Cottage',
-    'Mansion',
-    'Farmhouse',
-    'Land',
-    'Commercial',
-    'Office Space',
-    'Retail Space',
-    'Warehouse',
-    'Industrial'
-  ];
+
 
   const searchParams = useSearchParams();
   const name = searchParams.get('name');
+    const type = searchParams.get('type');
   const [googleMapsUrl, setGoogleMapsUrl] = useState('');
   const [formData, setFormData] = useState({
     user_id: searchParams.get('userId'),  // Replace with actual user ID or handle user authentication
@@ -47,7 +26,7 @@ export default function AddListing() {
     state: '',
     zip_code: '',
     country: '',
-    property_type: '',
+    property_type: type,
         buy:'',
     bedrooms: '',
     bathrooms: '',
@@ -241,22 +220,7 @@ export default function AddListing() {
               className={styles.input}
             />
           </label>
-          <label className={styles.label}>
-            Property Type:
-            <select
-              name="property_type"
-              value={formData.property_type}
-              onChange={handleChange}
-              required
-              className={styles.select}
-              style={{color:"#000"}} 
-            >
-              <option style={{color:"#000"}} value="" disabled>Select property type</option>
-              {propertyTypes.map(type => (
-                <option  style={{color:"#000"}}  key={type} value={type}>{type}</option>
-              ))}
-            </select>
-          </label>
+      
 
             <label className={styles.label}>
             Buy or rent :
