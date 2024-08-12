@@ -19,19 +19,11 @@ export default function LogIn() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const { login, user } = useUser();
+
   const router = useRouter(); // Get the router instance from Next.js
 
-  useEffect(() => {
-    if (user) {
-      // Perform the redirection based on user type
-      console.log(user);
-      if (user.type === 'admin') {
-        router.push('/listings/approve'); // Client-side navigation
-      } else {
-        router.push(`/listings?userId=${encodeURIComponent(user.userId)}&name=${encodeURIComponent(user.first_name)}`);
-      }
-    }
-  }, [user, router]); // Dependency array ensures this runs when `user` is updated
+
+
 
   const handleLogIn = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

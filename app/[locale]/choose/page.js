@@ -1,12 +1,14 @@
 // pages/property-types.js
 "use client";
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import styles from '../styles/PropertyTypes.module.css'; // Import CSS module for styling
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useSearchParams } from 'next/navigation';
 import LogIn from "../components/login"
+import { useUser } from '../../UserContext';
+import { useState } from 'react';
 
 const propertyTypes = [
   'Apartment', 'House', 'Condo', 'Villa', 'Townhouse', 'Studio', 'Penthouse', 'Duplex',
@@ -15,12 +17,22 @@ const propertyTypes = [
 ];
 
 const PropertyTypesPage = () => {
+const user = useUser();
+const [logged,setLogged] = useState(false);
+    useEffect(() => {
+  
+if (user !=null){
+    setLogged(true);
+}
+
+  }, [user]);
+
   const searchParams = useSearchParams();
   const type = searchParams.get('type'); // Get the action type from the query parameters
 
   return (
     <div className={styles.container}>
-          {type==="sell" && 
+          {type==="sell" &&  logged==false&&
         <div className='divlogitin'>
             
             <LogIn/>
@@ -28,7 +40,7 @@ const PropertyTypesPage = () => {
             
             
             </div>}
-      <Header isLoggedIn={false} />
+      <Header isLoggedIn={logged} />
       <div>
         <h1 style={{ color: "#000" }}>
           {type === 'buy' ? 'Buying' : type === 'sell' ? 'Selling' : 'Select an Action'}
