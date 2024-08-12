@@ -1,0 +1,91 @@
+/* Styles for the login container */
+.container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    color: black;
+    width: 90%;
+    max-width: 400px;
+    height: auto%;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles for the form */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Styles for labels */
+.label {
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 8px;
+}
+
+/* Styles for input fields */
+.input {
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #333;
+}
+
+/* Styles for submit button */
+.button {
+    padding: 12px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #383535;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover state for the submit button */
+.button:hover {
+    background-color: #555;
+}
+
+/* Styles for the link */
+.link {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #383535;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+/* Hover state for the link */
+.link:hover {
+    background-color: #555;
+}
+
+/* Styles for error and success messages */
+.error {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.success {
+    color: #2ecc71;
+    font-size: 14px;
+    margin-top: 10px;
+}
+

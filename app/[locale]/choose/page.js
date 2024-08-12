@@ -6,6 +6,7 @@ import styles from '../styles/PropertyTypes.module.css'; // Import CSS module fo
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useSearchParams } from 'next/navigation';
+import LogIn from "../components/login"
 
 const propertyTypes = [
   'Apartment', 'House', 'Condo', 'Villa', 'Townhouse', 'Studio', 'Penthouse', 'Duplex',
@@ -19,11 +20,21 @@ const PropertyTypesPage = () => {
 
   return (
     <div className={styles.container}>
+          {type==="sell" && 
+        <div className='divlogitin'>
+            
+            <LogIn/>
+            
+            
+            
+            </div>}
       <Header isLoggedIn={false} />
       <div>
         <h1 style={{ color: "#000" }}>
           {type === 'buy' ? 'Buying' : type === 'sell' ? 'Selling' : 'Select an Action'}
         </h1>
+
+      
         {/* Conditionally render content based on the type */}
         {type === 'buy' && (
           <div className={styles.buttonContainer}>
