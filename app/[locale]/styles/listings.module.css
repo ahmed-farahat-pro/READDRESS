@@ -1,11 +1,48 @@
 .listings {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+
     gap: 30px;
     background-color: #cdb588;
     
   
 }
+.listingsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Spacing between rows */
+  padding: 20px;
+}
+
+.rowContainer {
+  margin-bottom: 20px;
+}
+
+.scrollableRow {
+  display: flex;
+  overflow-x: auto; /* Enables horizontal scrolling */
+  gap: 15px; /* Spacing between listings */
+  padding-bottom: 10px; /* Padding to prevent scrollbar overlap */
+}
+
+.listing {
+  min-width: 200px; /* Minimum width to show listings properly */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-container {
+  width: 100%;
+  height: 150px; /* Adjust height as needed */
+  object-fit: cover;
+  border-radius: 8px;
+}
+
 
 /* Container for the action buttons */
 .actionButtons {
@@ -41,7 +78,7 @@
 
 .price{
     font-size: larger;
-    font-weight: 900;
+    font-weight: 700;
     
 }
 /* This class will be used when the sidebar should be visible */
@@ -72,9 +109,11 @@ background-color: #fff;
     align-items: center;
     border: 1px solid #ccc;
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
     box-sizing: border-box;
     color: black;
+  width: 200px;
+  height: 200px;
 }
 .listing:hover{
     background-color: gainsboro;
@@ -82,8 +121,8 @@ background-color: #fff;
 }
 
 .image-container {
-    width: 300px;
-    height: 300px;
+    width: 75%;
+    height: 75%;
     overflow: hidden;
     /* Hide any overflow */
     border-radius: 5px;

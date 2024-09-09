@@ -13,7 +13,8 @@ import TranslationsProvider from './components/TranslationsProvider';
 import { useTranslation } from 'react-i18next';
 import initTranslations from '../i18n'; // Ensure this path is correct
 import { useUser } from '../UserContext';
-
+import { faBuilding  } from '@fortawesome/free-solid-svg-icons';
+import { faHouse } from '@fortawesome/free-solid-svg-icons';
 const i18nNamespaces = ['home'];
 
 export default function Listings({ params: { locale } }) {
@@ -176,29 +177,318 @@ export default function Listings({ params: { locale } }) {
         </Link>
       </button>
     </div>
+  <div
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        padding: '10px',
+        margin: '10px',
+        overflowX: 'auto', // Enable horizontal scrolling
+        whiteSpace: 'nowrap', // Prevent wrapping of items
+
+      }}
+    >
+      <div
+        style={{display:"flex",
+            flexDirection:"column",
+          fontSize: '40px', // Make the icons bigger
+          margin: '0 15px', // Add some spacing between icons
+          cursor: 'pointer', // Change cursor to pointer on hover
+           alignItems:"center"
+        }}
+      >
+        <FontAwesomeIcon icon={faBuilding} />
+        <p style={{fontSize:"25px"}}>apartment</p>
+      </div>
+      <div
+        style={{display:"flex",
+            flexDirection:"column",
+          fontSize: '40px', // Make the icons bigger
+          margin: '0 15px', // Add some spacing between icons
+          cursor: 'pointer', // Change cursor to pointer on hover
+           alignItems:"center"
+        }}
+      >
+            <FontAwesomeIcon icon={faHouse} />
+               <p style={{fontSize:"25px"}}>apartment</p>
+      </div>
+      <div
+         style={{display:"flex",
+            flexDirection:"column",
+          fontSize: '40px', // Make the icons bigger
+          margin: '0 15px', // Add some spacing between icons
+          cursor: 'pointer', // Change cursor to pointer on hover
+           alignItems:"center"
+        }}
+      >
+        <FontAwesomeIcon icon={faBuilding} />
+           <p style={{fontSize:"25px"}}>apartment</p>
+      </div>
+      <div
+      style={{display:"flex",
+            flexDirection:"column",
+          fontSize: '40px', // Make the icons bigger
+          margin: '0 15px', // Add some spacing between icons
+          cursor: 'pointer', // Change cursor to pointer on hover
+           alignItems:"center"
+        }}
+      >
+          <FontAwesomeIcon icon={faHouse} />
+              <p style={{fontSize:"25px"}}>apartment</p>
+      </div>
+      <div
+     style={{display:"flex",
+            flexDirection:"column",
+          fontSize: '40px', // Make the icons bigger
+          margin: '0 15px', // Add some spacing between icons
+          cursor: 'pointer', // Change cursor to pointer on hover
+           alignItems:"center"
+        }}
+      >
+        <FontAwesomeIcon icon={faBuilding} />
+           <p style={{fontSize:"25px"}}>apartment</p>
+      </div>
+       <div
+   style={{display:"flex",
+            flexDirection:"column",
+          fontSize: '40px', // Make the icons bigger
+          margin: '0 15px', // Add some spacing between icons
+          cursor: 'pointer', // Change cursor to pointer on hover
+           alignItems:"center"
+        }}
+      >
+             <FontAwesomeIcon icon={faHouse} />
+                 <p style={{fontSize:"25px"}}>apartment</p>
+      </div>
+       <div
+       style={{display:"flex",
+            flexDirection:"column",
+          fontSize: '40px', // Make the icons bigger
+          margin: '0 15px', // Add some spacing between icons
+          cursor: 'pointer', // Change cursor to pointer on hover
+           alignItems:"center"
+        }}
+      >
+        <FontAwesomeIcon icon={faBuilding} />
+             <p style={{fontSize:"25px"}}>apartment</p>
+      </div>
+       <div
+ style={{display:"flex",
+            flexDirection:"column",
+          fontSize: '40px', // Make the icons bigger
+          margin: '0 15px', // Add some spacing between icons
+          cursor: 'pointer', // Change cursor to pointer on hover
+           alignItems:"center"
+        }}
+      >
+          <FontAwesomeIcon icon={faHouse} />
+           <p style={{fontSize:"25px"}}>apartment</p>
+      </div>
+       <div
+    style={{display:"flex",
+            flexDirection:"column",
+          fontSize: '40px', // Make the icons bigger
+          margin: '0 15px', // Add some spacing between icons
+          cursor: 'pointer', // Change cursor to pointer on hover
+           alignItems:"center"
+        }}
+      >
+        <FontAwesomeIcon icon={faBuilding} />
+         <p style={{fontSize:"25px"}}>apartment</p>
+      </div>
+       <div
+        style={{display:"flex",
+            flexDirection:"column",
+          fontSize: '40px', // Make the icons bigger
+          margin: '0 15px', // Add some spacing between icons
+          cursor: 'pointer', // Change cursor to pointer on hover
+           alignItems:"center"
+        }}
+      >
+             <FontAwesomeIcon icon={faHouse} />
+                  <p style={{fontSize:"25px"}}>apartment</p>
+      </div>
+       <div
+     style={{display:"flex",
+            flexDirection:"column",
+          fontSize: '40px', // Make the icons bigger
+          margin: '0 15px', // Add some spacing between icons
+          cursor: 'pointer', // Change cursor to pointer on hover
+           alignItems:"center"
+        }}
+      >
+        <FontAwesomeIcon icon={faBuilding} />
+       <p style={{fontSize:"25px"}}>apartment</p>
+      </div>
+       <div
+ style={{display:"flex",
+            flexDirection:"column",
+          fontSize: '40px', // Make the icons bigger
+          margin: '0 15px', // Add some spacing between icons
+          cursor: 'pointer', // Change cursor to pointer on hover
+           alignItems:"center"
+        }}
+      >
+             <FontAwesomeIcon icon={faHouse} />
+              <p style={{fontSize:"25px"}}>apartment</p>
+      </div>
+       <div
+    style={{display:"flex",
+            flexDirection:"column",
+          fontSize: '40px', // Make the icons bigger
+          margin: '0 15px', // Add some spacing between icons
+          cursor: 'pointer', // Change cursor to pointer on hover
+           alignItems:"center"
+        }}
+      >
+        <FontAwesomeIcon icon={faBuilding} />
+      <p style={{fontSize:"25px"}}>apartment</p>
+      </div>
+       <div
+      style={{display:"flex",
+            flexDirection:"column",
+          fontSize: '40px', // Make the icons bigger
+          margin: '0 15px', // Add some spacing between icons
+          cursor: 'pointer', // Change cursor to pointer on hover
+           alignItems:"center"
+        }}
+      >
+      <FontAwesomeIcon icon={faHouse} />
+         <p style={{fontSize:"25px"}}>apartment</p>
+      </div>
+    </div>
               {error && <p className={styles.error}>{error}</p>}
               {!loading ? (
-                <div className={styles.listings}>
-                  {filteredListings.map((listing) => (
-                    <Link
-                      key={listing._id}
-                      href={`/listings/show?data=${encodeURIComponent(JSON.stringify(listing))}`}
-                      className={styles.cardLink}
-                    >
-                      <div className={styles.listing}>
-                        {listing.images.length > 0 && (
-                          <img
-                            src={listing.images[0].image_url}
-                            alt="Listing Image"
-                            className={styles['image-container']}
-                          />
-                        )}
-                        <h2>{listing.title}</h2>
-                        <p className={styles.price}>{listing.price} {t("EGP")}</p>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
+                <div className={styles.listingsContainer}>
+  {/* House Listings */}
+  <div className={styles.rowContainer}>
+    <h3>Houses</h3>
+    <div className={styles.scrollableRow}>
+      {filteredListings
+        .filter((listing) => listing.property_type === 'house')
+        .map((listing) => (
+          <Link
+            key={listing._id}
+            href={`/listings/show?data=${encodeURIComponent(
+              JSON.stringify(listing)
+            )}`}
+            className={styles.cardLink}
+          >
+            <div className={styles.listing}>
+              {listing.images.length > 0 && (
+                <img
+                  src={listing.images[0].image_url}
+                  alt="Listing Image"
+                  className={styles['image-container']}
+                />
+              )}
+              <h2>{listing.title}</h2>
+              <p className={styles.price}>
+                {listing.price} {t('EGP')}
+              </p>
+            </div>
+          </Link>
+        ))}
+    </div>
+  </div>
+
+  {/* Land Listings */}
+  <div className={styles.rowContainer}>
+    <h3>Lands</h3>
+    <div className={styles.scrollableRow}>
+      {filteredListings
+        .filter((listing) => listing.property_type === 'land')
+        .map((listing) => (
+          <Link
+            key={listing._id}
+            href={`/listings/show?data=${encodeURIComponent(
+              JSON.stringify(listing)
+            )}`}
+            className={styles.cardLink}
+          >
+            <div className={styles.listing}>
+              {listing.images.length > 0 && (
+                <img
+                  src={listing.images[0].image_url}
+                  alt="Listing Image"
+                  className={styles['image-container']}
+                />
+              )}
+              <h2>{listing.title}</h2>
+              <p className={styles.price}>
+                {listing.price} {t('EGP')}
+              </p>
+            </div>
+          </Link>
+        ))}
+    </div>
+  </div>
+
+  {/* Villa Listings */}
+  <div className={styles.rowContainer}>
+    <h3>Villas</h3>
+    <div className={styles.scrollableRow}>
+      {filteredListings
+        .filter((listing) => listing.property_type === 'villa')
+        .map((listing) => (
+          <Link
+            key={listing._id}
+            href={`/listings/show?data=${encodeURIComponent(
+              JSON.stringify(listing)
+            )}`}
+            className={styles.cardLink}
+          >
+            <div className={styles.listing}>
+              {listing.images.length > 0 && (
+                <img
+                  src={listing.images[0].image_url}
+                  alt="Listing Image"
+                  className={styles['image-container']}
+                />
+              )}
+              <h2>{listing.title}</h2>
+              <p className={styles.price}>
+                {listing.price} {t('EGP')}
+              </p>
+            </div>
+          </Link>
+        ))}
+    </div>
+  </div>
+
+  {/* Twinhouse Listings */}
+  <div className={styles.rowContainer}>
+    <h3>Twinhouses</h3>
+    <div className={styles.scrollableRow}>
+      {filteredListings
+        .filter((listing) => listing.property_type === 'twinhouse')
+        .map((listing) => (
+          <Link
+            key={listing._id}
+            href={`/listings/show?data=${encodeURIComponent(
+              JSON.stringify(listing)
+            )}`}
+            className={styles.cardLink}
+          >
+            <div className={styles.listing}>
+              {listing.images.length > 0 && (
+                <img
+                  src={listing.images[0].image_url}
+                  alt="Listing Image"
+                  className={styles['image-container']}
+                />
+              )}
+              <h2>{listing.title}</h2>
+              <p className={styles.price}>
+                {listing.price} {t('EGP')}
+              </p>
+            </div>
+          </Link>
+        ))}
+    </div>
+  </div>
+</div>
+
               ) : (
                 <div className={styles.loading}>
                   <p>loading</p>

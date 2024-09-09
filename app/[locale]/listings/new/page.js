@@ -20,7 +20,7 @@ export default function AddListing({ params: { locale } }) {
   const name = searchParams.get('name');
    const [t, setT] = useState(() => (key) => key); // Default to identity function
   const [resources, setResources] = useState(null);
-    const type = searchParams.get('type');
+    const type = searchParams.get('propertyType');
       const [translationsReady, setTranslationsReady] = useState(false);
   const [googleMapsUrl, setGoogleMapsUrl] = useState('');
   const [formData, setFormData] = useState({
