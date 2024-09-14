@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-  "dev": "i18nexus pull && next dev",
-    "build": "i18nexus pull && next build",
-    "start": "i18nexus pull && next start",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -20,7 +20,8 @@
     "connect-mongodb-session": "^5.0.0",
     "express-session": "^1.18.0",
     "formidable": "^3.5.1",
-    "i18next": "^23.12.2",
+    "gsap": "^3.12.5",
+    "i18next": "^23.15.1",
     "i18next-resources-to-backend": "^1.2.1",
     "mongoose": "^8.4.5",
     "multer": "^1.4.5-lts.1",
@@ -35,6 +36,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-i18next": "^15.0.1",
+    "react-router-dom": "^6.26.0",
     "styled-components": "^6.1.12",
     "twilio": "^5.2.2"
   },

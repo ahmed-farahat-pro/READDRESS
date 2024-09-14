@@ -83,7 +83,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn, userName }) => {
                   onClick={handleLogin}
                   className="bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-700 w-full text-left"
                 >
-                  {t("Log In ")}
+                  {t("Log In")}
                 </button>
               </>
             ) : (

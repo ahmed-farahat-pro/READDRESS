@@ -17,29 +17,7 @@ const listingSchema = new Schema({
 property_type: {
   type: String,
   required: true,
-  enum: [
-    "Apartment",
-    "House",
-    "Condo",
-    "Villa",
-    "Townhouse",
-    "Studio",
-    "Penthouse",
-    "Duplex",
-    "Triplex",
-    "Loft",
-    "Flat",
-    "Bungalow",
-    "Cottage",
-    "Mansion",
-    "Farmhouse",
-    "Land",
-    "Commercial",
-    "Office Space",
-    "Retail Space",
-    "Warehouse",
-    "Industrial"
-  ]
+ 
 }
 ,
   buy: { type: String, required: true, enum: ['buy', 'rent'] },
@@ -51,10 +29,11 @@ property_type: {
   updated_at: { type: Date, default: Date.now },
   images: [
     {
-      image_url: { type: String, required: true },
+      image_url: { type: String, required: false },
       created_at: { type: Date, default: Date.now }
     }
-  ]
+  ],
+    Video: { type: String, required: false },
 });
 
 module.exports = mongoose.models.Listing || mongoose.model('Listing', listingSchema);

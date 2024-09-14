@@ -33,7 +33,8 @@ export const POST = async (request) => {
       bathrooms,
       area,
       status,
-      images
+      images,
+      Video,
     } = await request.json();
 
     // Log the incoming data to check for any issues
@@ -54,7 +55,8 @@ export const POST = async (request) => {
       bathrooms,
       area,
       status,
-      images
+      images,
+      Video
     });
 
     const newListing = new Listing({
@@ -74,7 +76,8 @@ export const POST = async (request) => {
       bathrooms,
       area,
       status,
-      images
+      images,
+      Video
     });
     console.log(newListing);
 
@@ -93,6 +96,7 @@ export const POST = async (request) => {
     Area: ${newListing.area} sq. ft.
     Status: ${newListing.status}
     Images: ${newListing.images.join(', ')}
+    Video :  ${newListing.Video}
   `;
  
 
@@ -115,6 +119,7 @@ export const POST = async (request) => {
     <p><strong>Area:</strong> ${newListing.area} sq. ft.</p>
     <p><strong>Status:</strong> ${newListing.status}</p>
     <p><strong>Images:</strong> ${newListing.images.join(', ')}</p>
+     <p><strong>Video:</strong> ${newListing.Video}</p>
   `;
     let mailOptions = {
   from: 'ahmedfarahat430@gmail.com', // Sender address

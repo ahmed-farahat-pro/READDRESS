@@ -15,9 +15,16 @@ import initTranslations from '../i18n'; // Ensure this path is correct
 import { useUser } from '../UserContext';
 import { faBuilding  } from '@fortawesome/free-solid-svg-icons';
 import { faHouse } from '@fortawesome/free-solid-svg-icons';
+import gsap from 'gsap'; // Import GSAP
 const i18nNamespaces = ['home'];
 
 export default function Listings({ params: { locale } }) {
+    const propertyList = [
+  'Apartment', 'House', 'Condo', 'Villa', 'Townhouse', 'Studio', 'Penthouse', 'Duplex',
+  'Triplex', 'Loft', 'Flat', 'Bungalow', 'Cottage', 'Mansion', 'Farmhouse', 'Land',
+  'Commercial', 'Office Space', 'Retail Space', 'Warehouse', 'Industrial'
+];
+
   const searchParams = useSearchParams();
   const userId = searchParams.get('userId');
    const { user } = useUser(); // Get user from context
@@ -31,10 +38,24 @@ export default function Listings({ params: { locale } }) {
   const [filters, setFilters] = useState({});
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [translationsReady, setTranslationsReady] = useState(false);
+   const [showBackground, setShowBackground] = useState(true);
 
   const toggleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
   };
+
+ useEffect(() => {
+    if (showBackground) {
+      gsap.fromTo(
+        ".cle-text", 
+        { x: '-100vw', opacity: 0 }, // Starting from offscreen left and hidden
+        { x: '0', opacity: 1, duration: 3, ease: 'power3.out', delay: 1 } // Animate to center and fade in
+      );
+
+      // Background fade-out after the "CLE" animation
+      gsap.to(".fade-bg", { opacity: 0, duration: 2, delay: 5, onComplete: () => setShowBackground(false) });
+    }
+  }, [showBackground]);
 
     useEffect(() => {
     console.log('User:', user);
@@ -117,9 +138,73 @@ export default function Listings({ params: { locale } }) {
       setError('Failed to fetch listings');
     }
   };
+  const cardStyles = {
+  display: "flex",
+  flexDirection: "column",
+  fontSize: '2.5rem', // Responsive font size for larger screens
+  margin: '0 1rem', // Responsive margin
+  cursor: 'pointer', // Pointer on hover
+  alignItems: "center",
+  justifyContent: "center", // Center content vertically
+  backgroundColor: "#383535", // Light grey background
+  padding: "1.5rem", // Responsive padding
+  borderRadius: "1rem", // Rounded edges
+  boxShadow: "0 0.5rem 1rem rgba(0, 0, 0, 0.1)", // Light shadow effect
+  border: "0.2rem solid #ccc", // Optional border
+  fontFamily: "sans-serif", // Sans-serif font
+  transition: "transform 0.3s ease", // Smooth hover animation
+  width: '100%', // Full width to allow flexibility
+  maxWidth: '30rem', // Max width for larger screens
+};
+
+// Styles for the text in the cards
+const paragraphStyles = {
+  fontSize: "1.5rem", // Responsive font size
+  margin: 0,
+  textAlign: "center", // Center text for better alignment
+};
+
+// Media query for phones (smaller screens)
+const smallScreenStyles = {
+  ...cardStyles,
+  fontSize: '1.5rem', // Smaller font size for phones
+  padding: '1rem', // Smaller padding for phones
+  margin: '0.5rem', // Reduce margin for phones
+  maxWidth: '100%', // Allow full width on smaller screens
+  borderRadius: "0.5rem", // Reduce border radius for phones
+};
+
+const smallParagraphStyles = {
+  fontSize: "1rem", // Smaller font size for text on phones
+};
+
+
+
 
   return (
     <div className={styles.container}>
+          {showBackground && (
+        <div
+          className="fade-bg"
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'black',
+            zIndex: 1000, // High z-index to ensure it covers the content
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          {/* "CLE" Text */}
+          <div className="cle-text" style={{ color: 'white', fontSize: '5rem', fontWeight: 'bold' }}>
+            CLE
+          </div>
+        </div>
+      )}
       {translationsReady ? (
         <TranslationsProvider
           namespaces={i18nNamespaces}
@@ -188,184 +273,30 @@ export default function Listings({ params: { locale } }) {
 
       }}
     >
-      <div
-        style={{display:"flex",
-            flexDirection:"column",
-          fontSize: '40px', // Make the icons bigger
-          margin: '0 15px', // Add some spacing between icons
-          cursor: 'pointer', // Change cursor to pointer on hover
-           alignItems:"center"
-        }}
-      >
-        <FontAwesomeIcon icon={faBuilding} />
-        <p style={{fontSize:"25px"}}>apartment</p>
-      </div>
-      <div
-        style={{display:"flex",
-            flexDirection:"column",
-          fontSize: '40px', // Make the icons bigger
-          margin: '0 15px', // Add some spacing between icons
-          cursor: 'pointer', // Change cursor to pointer on hover
-           alignItems:"center"
-        }}
-      >
-            <FontAwesomeIcon icon={faHouse} />
-               <p style={{fontSize:"25px"}}>apartment</p>
-      </div>
-      <div
-         style={{display:"flex",
-            flexDirection:"column",
-          fontSize: '40px', // Make the icons bigger
-          margin: '0 15px', // Add some spacing between icons
-          cursor: 'pointer', // Change cursor to pointer on hover
-           alignItems:"center"
-        }}
-      >
-        <FontAwesomeIcon icon={faBuilding} />
-           <p style={{fontSize:"25px"}}>apartment</p>
-      </div>
-      <div
-      style={{display:"flex",
-            flexDirection:"column",
-          fontSize: '40px', // Make the icons bigger
-          margin: '0 15px', // Add some spacing between icons
-          cursor: 'pointer', // Change cursor to pointer on hover
-           alignItems:"center"
-        }}
-      >
-          <FontAwesomeIcon icon={faHouse} />
-              <p style={{fontSize:"25px"}}>apartment</p>
-      </div>
-      <div
-     style={{display:"flex",
-            flexDirection:"column",
-          fontSize: '40px', // Make the icons bigger
-          margin: '0 15px', // Add some spacing between icons
-          cursor: 'pointer', // Change cursor to pointer on hover
-           alignItems:"center"
-        }}
-      >
-        <FontAwesomeIcon icon={faBuilding} />
-           <p style={{fontSize:"25px"}}>apartment</p>
-      </div>
+{propertyList.map((property, index) => (
        <div
-   style={{display:"flex",
-            flexDirection:"column",
-          fontSize: '40px', // Make the icons bigger
-          margin: '0 15px', // Add some spacing between icons
-          cursor: 'pointer', // Change cursor to pointer on hover
-           alignItems:"center"
-        }}
-      >
-             <FontAwesomeIcon icon={faHouse} />
-                 <p style={{fontSize:"25px"}}>apartment</p>
-      </div>
-       <div
-       style={{display:"flex",
-            flexDirection:"column",
-          fontSize: '40px', // Make the icons bigger
-          margin: '0 15px', // Add some spacing between icons
-          cursor: 'pointer', // Change cursor to pointer on hover
-           alignItems:"center"
-        }}
-      >
-        <FontAwesomeIcon icon={faBuilding} />
-             <p style={{fontSize:"25px"}}>apartment</p>
-      </div>
-       <div
- style={{display:"flex",
-            flexDirection:"column",
-          fontSize: '40px', // Make the icons bigger
-          margin: '0 15px', // Add some spacing between icons
-          cursor: 'pointer', // Change cursor to pointer on hover
-           alignItems:"center"
-        }}
-      >
-          <FontAwesomeIcon icon={faHouse} />
-           <p style={{fontSize:"25px"}}>apartment</p>
-      </div>
-       <div
-    style={{display:"flex",
-            flexDirection:"column",
-          fontSize: '40px', // Make the icons bigger
-          margin: '0 15px', // Add some spacing between icons
-          cursor: 'pointer', // Change cursor to pointer on hover
-           alignItems:"center"
-        }}
-      >
-        <FontAwesomeIcon icon={faBuilding} />
-         <p style={{fontSize:"25px"}}>apartment</p>
-      </div>
-       <div
-        style={{display:"flex",
-            flexDirection:"column",
-          fontSize: '40px', // Make the icons bigger
-          margin: '0 15px', // Add some spacing between icons
-          cursor: 'pointer', // Change cursor to pointer on hover
-           alignItems:"center"
-        }}
-      >
-             <FontAwesomeIcon icon={faHouse} />
-                  <p style={{fontSize:"25px"}}>apartment</p>
-      </div>
-       <div
-     style={{display:"flex",
-            flexDirection:"column",
-          fontSize: '40px', // Make the icons bigger
-          margin: '0 15px', // Add some spacing between icons
-          cursor: 'pointer', // Change cursor to pointer on hover
-           alignItems:"center"
-        }}
-      >
-        <FontAwesomeIcon icon={faBuilding} />
-       <p style={{fontSize:"25px"}}>apartment</p>
-      </div>
-       <div
- style={{display:"flex",
-            flexDirection:"column",
-          fontSize: '40px', // Make the icons bigger
-          margin: '0 15px', // Add some spacing between icons
-          cursor: 'pointer', // Change cursor to pointer on hover
-           alignItems:"center"
-        }}
-      >
-             <FontAwesomeIcon icon={faHouse} />
-              <p style={{fontSize:"25px"}}>apartment</p>
-      </div>
-       <div
-    style={{display:"flex",
-            flexDirection:"column",
-          fontSize: '40px', // Make the icons bigger
-          margin: '0 15px', // Add some spacing between icons
-          cursor: 'pointer', // Change cursor to pointer on hover
-           alignItems:"center"
-        }}
-      >
-        <FontAwesomeIcon icon={faBuilding} />
-      <p style={{fontSize:"25px"}}>apartment</p>
-      </div>
-       <div
-      style={{display:"flex",
-            flexDirection:"column",
-          fontSize: '40px', // Make the icons bigger
-          margin: '0 15px', // Add some spacing between icons
-          cursor: 'pointer', // Change cursor to pointer on hover
-           alignItems:"center"
-        }}
-      >
-      <FontAwesomeIcon icon={faHouse} />
-         <p style={{fontSize:"25px"}}>apartment</p>
-      </div>
+  style={window.innerWidth <= 600 ? smallScreenStyles : cardStyles}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.transform = "scale(1.05)";
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.transform = "scale(1)";
+  }}
+>
+  <p style={window.innerWidth <= 600 ? smallParagraphStyles : paragraphStyles}>{t(property)}</p>
+</div>
+      ))}
+
     </div>
               {error && <p className={styles.error}>{error}</p>}
               {!loading ? (
                 <div className={styles.listingsContainer}>
   {/* House Listings */}
   <div className={styles.rowContainer}>
-    <h3>Houses</h3>
+    <h3>{t('House')}</h3>
     <div className={styles.scrollableRow}>
       {filteredListings
-        .filter((listing) => listing.property_type === 'house')
+        .filter((listing) => listing.property_type === 'House')
         .map((listing) => (
           <Link
             key={listing._id}
@@ -394,10 +325,10 @@ export default function Listings({ params: { locale } }) {
 
   {/* Land Listings */}
   <div className={styles.rowContainer}>
-    <h3>Lands</h3>
+        <h3>{t('Land')}</h3>
     <div className={styles.scrollableRow}>
       {filteredListings
-        .filter((listing) => listing.property_type === 'land')
+        .filter((listing) => listing.property_type === 'Land')
         .map((listing) => (
           <Link
             key={listing._id}
@@ -426,10 +357,10 @@ export default function Listings({ params: { locale } }) {
 
   {/* Villa Listings */}
   <div className={styles.rowContainer}>
-    <h3>Villas</h3>
+     <h3>{t('Villa')}</h3>
     <div className={styles.scrollableRow}>
       {filteredListings
-        .filter((listing) => listing.property_type === 'villa')
+        .filter((listing) => listing.property_type === 'Villa')
         .map((listing) => (
           <Link
             key={listing._id}
@@ -458,10 +389,10 @@ export default function Listings({ params: { locale } }) {
 
   {/* Twinhouse Listings */}
   <div className={styles.rowContainer}>
-    <h3>Twinhouses</h3>
+        <h3>{t('Twinhouse')}</h3>
     <div className={styles.scrollableRow}>
       {filteredListings
-        .filter((listing) => listing.property_type === 'twinhouse')
+        .filter((listing) => listing.property_type === 'Twinhouse')
         .map((listing) => (
           <Link
             key={listing._id}
@@ -495,7 +426,7 @@ export default function Listings({ params: { locale } }) {
                 </div>
               )}
             </div>
-            <Footer />
+          
           </Suspense>
         </TranslationsProvider>
       ) : (

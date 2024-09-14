@@ -15,7 +15,7 @@ const i18nNamespaces = ['home'];
 export default function AddListing({ params: { locale } }) {
     const buyitorrent = ['buy' , 'rent'];
 
-
+const user = useUser();
   const searchParams = useSearchParams();
   const name = searchParams.get('name');
    const [t, setT] = useState(() => (key) => key); // Default to identity function
@@ -24,7 +24,7 @@ export default function AddListing({ params: { locale } }) {
       const [translationsReady, setTranslationsReady] = useState(false);
   const [googleMapsUrl, setGoogleMapsUrl] = useState('');
   const [formData, setFormData] = useState({
-    user_id: searchParams.get('userId'),  // Replace with actual user ID or handle user authentication
+    user_id: user.user.userId,  // Replace with actual user ID or handle user authentication
     title: '',
     maps_url: '',
     description: '',
@@ -40,11 +40,14 @@ export default function AddListing({ params: { locale } }) {
     bathrooms: '',
     area: '',
     status: 'pending',
-    images: []
+    images: [],
+    Video:''
   });
   const [files, setFiles] = useState([]);
   const [previews, setPreviews] = useState([]);
 
+
+console.log(user);
   useEffect(() => {
     const fetchTranslations = async () => {
       try {
@@ -295,6 +298,18 @@ export default function AddListing({ params: { locale } }) {
               type="number"
               name="area"
               value={formData.area}
+              onChange={handleChange}
+              required
+              className={styles.input}
+            />
+          </label>
+
+            <label className={styles.label}>
+            Video:
+            <input
+              type="text"
+              name="Video"
+              value={formData.Video}
               onChange={handleChange}
               required
               className={styles.input}
